@@ -68,8 +68,8 @@ static void *vp_shmem_video_consumer_thread(void *pdata)
             printf("** %s: invalid magic num\n", __func__);
         }
         else if (shmData->msgId > lastReadFrameId) {
-            printf(".. %s: reading frame %ld, size %d*%d, audiosize %d\n", __func__,
-                   shmData->msgId, shmData->w, shmData->h, shmData->audioDataSize);
+            //printf(".. %s: reading frame %ld, size %d*%d, audiosize %d\n", __func__,
+            //       shmData->msgId, shmData->w, shmData->h, shmData->audioDataSize);
 
             lastReadFrameId = shmData->msgId;
 

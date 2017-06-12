@@ -23,6 +23,8 @@ static uint32_t s_videoW = 1280;
 static uint32_t s_videoH = 720;
 static std::string *s_recordingFilePath = NULL;
 static double s_audioSyncOffsetInSecs = 0.6;
+static std::string *s_streamUrl = NULL;
+static std::string *s_streamKey = NULL;
 
 static std::atomic_bool s_running;
 static std::atomic_bool s_streaming;
@@ -120,9 +122,11 @@ static void initObsStreaming()
                                          "file output", NULL, NULL);
     }
 
-    if (1) {
-        const char *serverUrl = "rtmp://a.rtmp.youtube.com/live2";
-        const char *serverKey = "dh5q-g412-mbpz-2t0u";
+    std::cout << "stream dest url: " << (s_streamUrl ? *s_streamUrl : "(null)") << std::endl;
+
+    if (s_streamUrl && s_streamKey) {
+        const char *serverUrl = s_streamUrl->c_str();  //"rtmp://a.rtmp.youtube.com/live2";
+        const char *serverKey = s_streamKey->c_str(); //"dh5q-g412-mbpz-2t0u";
         s_numStreams = 1;
 
         s_streamOutputs[0] = obs_output_create("rtmp_output",
@@ -159,7 +163,6 @@ static void initObsStreaming()
         s_aacStreaming = obs_audio_encoder_create("ffmpeg_aac",
                                                   "simple aac", NULL, 0, NULL);
 
-        //s_vpAudioSource =
     }
 
 
@@ -332,6 +335,12 @@ int main(int argc, char* argv[])
         if (0 == strcmp("--shmemfile", argv[i]) && i < argc-1) {
             s_shmemFileName = new std::string(argv[++i]);
         }
+        if (0 == strcmp("--stream-url", argv[i]) && i < argc-1) {
+            s_streamUrl = new std::string(argv[++i]);
+        }
+        if (0 == strcmp("--stream-key", argv[i]) && i < argc-1) {
+            s_streamKey = new std::string(argv[++i]);
+        }
     }
 
     /*
@@ -347,8 +356,8 @@ int main(int argc, char* argv[])
         g_vpObsVideo_shmemFileName = s_shmemFileName->c_str();
     }
 
-    //std::cout << "audio pipe file: " << (s_audiopipeFileName ? *s_audiopipeFileName : "(null)") << "\n";
-    std::cout << "shmem file: " << (s_shmemFileName ? *s_shmemFileName : "(null)") << "\n";
+    //std::cout << "audio pipe file: " << (s_audiopipeFileName ? *s_audiopipeFileName : "(null)") << std::endl;
+    std::cout << "shmem file: " << (s_shmemFileName ? *s_shmemFileName : "(null)") << std::endl;
 
     /*
     if (s_audiopipeFileName) {
