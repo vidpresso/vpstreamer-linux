@@ -17,7 +17,7 @@
 #endif
 
 
-//static std::string *s_audiopipeFileName = NULL;
+static std::string *s_cmdPipeFileName = NULL;
 static std::string *s_shmemFileName = NULL;
 static uint32_t s_videoW = 1280;
 static uint32_t s_videoH = 720;
@@ -30,6 +30,44 @@ static std::atomic_bool s_running;
 static std::atomic_bool s_streaming;
 static std::atomic_bool s_interrupted;
 
+
+
+static void commandPipeThreadFunc()
+{
+    std::cout << __func__ << " starting" << std::endl;
+
+    int fd = open(s_cmdPipeFileName->c_str(), O_RDONLY);
+    if (fd < 0) {
+        std::cout << __func__ << " failed, could not open: " << *s_cmdPipeFileName << std::endl;
+        return;
+    }
+
+    const int bufSize = 512;
+    uint8_t buf[512];
+
+    while (1) {
+        usleep(5*1000);
+
+        ssize_t bytesRead = read(fd, buf, bufSize - 1);
+        if (bytesRead < 0) {
+            std::cout << __func__ << " read() failed with error " << errno << std::endl;
+            break;
+        }
+        if (bytesRead == 0) {
+            continue;
+        }
+        buf[bytesRead] = 0;  // ensure null-terminated string
+
+        std::cout << "... cmd thread read " << bytesRead << " bytes: " << (const char *)buf << std::endl;
+
+        if (0 == memcmp(buf, "#exit", 5)) {
+            s_interrupted = true;
+        }
+    }
+
+    close(fd);
+    std::cout << __func__ << " finished" << std::endl;
+}
 
 
 // obs state
@@ -45,21 +83,6 @@ obs_service_t *s_services[MAXSERVICES];
 int s_numStreams = 0;
 
 
-/*
-void audio_thread_func()
-{
-    std::cout << __func__ << "\n";
-
-    int fd = open(s_audiopipeFileName->c_str(), O_RDONLY);
-
-    usleep(1000*1000 * 2);
-
-    close(fd);
-    s_running = false;
-
-    std::cout << __func__ << " finished\n";
-}
-*/
 
 static void obsLogHandlerCb(int lvl, const char *msg, va_list args, void *p)
 {
@@ -335,11 +358,14 @@ int main(int argc, char* argv[])
         if (0 == strcmp("--shmemfile", argv[i]) && i < argc-1) {
             s_shmemFileName = new std::string(argv[++i]);
         }
-        if (0 == strcmp("--stream-url", argv[i]) && i < argc-1) {
+        else if (0 == strcmp("--stream-url", argv[i]) && i < argc-1) {
             s_streamUrl = new std::string(argv[++i]);
         }
-        if (0 == strcmp("--stream-key", argv[i]) && i < argc-1) {
+        else if (0 == strcmp("--stream-key", argv[i]) && i < argc-1) {
             s_streamKey = new std::string(argv[++i]);
+        }
+        else if (0 == strcmp("--cmdpipe", argv[i]) && i < argc-1) {
+            s_cmdPipeFileName = new std::string(argv[++i]);
         }
     }
 
@@ -359,18 +385,11 @@ int main(int argc, char* argv[])
     //std::cout << "audio pipe file: " << (s_audiopipeFileName ? *s_audiopipeFileName : "(null)") << std::endl;
     std::cout << "shmem file: " << (s_shmemFileName ? *s_shmemFileName : "(null)") << std::endl;
 
-    /*
-    if (s_audiopipeFileName) {
-        std::thread t(&audio_thread_func);
+    if (s_cmdPipeFileName) {
+        std::thread t(&commandPipeThreadFunc);
         t.detach();
     }
 
-    s_running = true;
-
-    while (s_running) {
-        usleep(1000);
-    }
-*/
     initObsStreaming();
 
     resetObsVideoAndAudio();
@@ -387,9 +406,10 @@ int main(int argc, char* argv[])
     signal(SIGTERM, terminationSignalHandlerCb);
 
     while (1) {
-        //usleep(10*1000);
-        sleep(60);
-        s_interrupted = true;
+        usleep(10*1000);
+
+        /*sleep(1);
+        s_interrupted = true;*/
 
         if (s_interrupted) {
             std::cout << "Streaming stop requested." << std::endl;
