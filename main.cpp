@@ -17,11 +17,12 @@
 #endif
 
 
-static std::string *s_cmdPipeFileName = NULL;
 static std::string *s_shmemFileName = NULL;
+static std::string *s_pidFileName = NULL;
+static std::string *s_statusFileName = NULL;
+static std::string *s_recordingFileName = NULL;
 static uint32_t s_videoW = 1280;
 static uint32_t s_videoH = 720;
-static std::string *s_recordingFilePath = NULL;
 static double s_audioSyncOffsetInSecs = 0.6;
 static std::string *s_streamUrl = NULL;
 static std::string *s_streamKey = NULL;
@@ -31,7 +32,43 @@ static std::atomic_bool s_streaming;
 static std::atomic_bool s_interrupted;
 
 
+static void writeStatusToFile(const char *msg)
+{
+    if ( !s_statusFileName) return;
 
+    FILE *fd = fopen(s_statusFileName->c_str(), "w");
+    if (fd) {
+        size_t len = strlen(msg);
+        fwrite(msg, len, 1, fd);
+        fclose(fd);
+    }
+}
+
+
+static void pidMonitorThreadFunc()
+{
+    std::cout << __func__ << " starting" << std::endl;
+
+    uint32_t sleepTime = 3*NSEC_PER_SEC;  // longer initial wait
+
+    while (1) {
+        usleep(sleepTime);
+        sleepTime = 10*1000;
+
+        struct stat st;
+        int res = stat(s_pidFileName->c_str(), &st);
+
+        if (res != 0) {
+            // file doesn't exist anymore, so we should terminate
+            std::cout << "pidfile has vanished (errno" << errno << "), will interrupt" << std::endl;
+            s_interrupted = true;
+            break;
+        }
+    }
+
+    std::cout << __func__ << " finished" << std::endl;
+}
+/*
 static void commandPipeThreadFunc()
 {
     std::cout << __func__ << " starting" << std::endl;
@@ -68,6 +105,8 @@ static void commandPipeThreadFunc()
     close(fd);
     std::cout << __func__ << " finished" << std::endl;
 }
+ */
+
 
 
 // obs state
@@ -83,6 +122,41 @@ obs_service_t *s_services[MAXSERVICES];
 int s_numStreams = 0;
 
 
+typedef struct {
+    long serviceIndex;
+} VPObsCallbackData;
+
+static void obsOutputStartCb(void *data, struct calldata *calldata)
+{
+    VPObsCallbackData *cbData = (VPObsCallbackData *)data;
+    char text[256];
+    snprintf(text, 255, "output-started_%ld", cbData->serviceIndex);
+    writeStatusToFile(text);
+}
+
+static void obsOutputStopCb(void *data, struct calldata *calldata)
+{
+    VPObsCallbackData *cbData = (VPObsCallbackData *)data;
+    char text[256];
+    snprintf(text, 255, "output-stopped_%ld", cbData->serviceIndex);
+    writeStatusToFile(text);
+}
+
+static void obsOutputReconnectCb(void *data, struct calldata *calldata)
+{
+    VPObsCallbackData *cbData = (VPObsCallbackData *)data;
+    char text[256];
+    snprintf(text, 255, "output-reconnect_%ld", cbData->serviceIndex);
+    writeStatusToFile(text);
+}
+
+static void obsOutputReconnectSuccessCb(void *data, struct calldata *calldata)
+{
+    VPObsCallbackData *cbData = (VPObsCallbackData *)data;
+    char text[256];
+    snprintf(text, 255, "output-reconnect-success_%ld", cbData->serviceIndex);
+    writeStatusToFile(text);
+}
 
 static void obsLogHandlerCb(int lvl, const char *msg, va_list args, void *p)
 {
@@ -140,7 +214,7 @@ static void initObsLibraries()
 
 static void initObsStreaming()
 {
-    if (1) {
+    if (s_recordingFileName) {
         s_fileOutput = obs_output_create("ffmpeg_muxer",
                                          "file output", NULL, NULL);
     }
@@ -155,17 +229,17 @@ static void initObsStreaming()
         s_streamOutputs[0] = obs_output_create("rtmp_output",
                                                "vp stream output", NULL, NULL);
 
-        /*VPObsCallbackData *cbData = calloc(1, sizeof(VPObsCallbackData));
-        cbData->serviceIndex = i;
-        cbData->streamer = (__bridge void *)(self);
 
+        VPObsCallbackData *cbData = (VPObsCallbackData *)calloc(1, sizeof(VPObsCallbackData));
+        cbData->serviceIndex = 0;
         signal_handler_t *sh;
-        sh = obs_output_get_signal_handler(_streamOutputs[i]);
-        signal_handler_connect(sh, "start", _output_start_cb, cbData);
-        signal_handler_connect(sh, "stop", _output_stop_cb, cbData);
-        signal_handler_connect(sh, "reconnect", _output_reconnect_cb, cbData);
-        signal_handler_connect(sh, "reconnect_success", _output_reconnect_success_cb, cbData);
-*/
+        sh = obs_output_get_signal_handler(s_streamOutputs[0]);
+        signal_handler_connect(sh, "start", obsOutputStartCb, cbData);
+        signal_handler_connect(sh, "stop", obsOutputStopCb, cbData);
+        signal_handler_connect(sh, "reconnect", obsOutputReconnectCb, cbData);
+        signal_handler_connect(sh, "reconnect_success", obsOutputReconnectSuccessCb, cbData);
+
+
         s_services[0] = obs_service_create("rtmp_custom",
                                            "vp stream service", NULL, NULL);
 
@@ -299,19 +373,14 @@ static void startObsStreaming()
 
         obs_data_t *fileOutputSettings = obs_data_create();
 
-        char path[512];
-        snprintf(path, 511, "/tmp/vpstreamer_rec_%s.mp4", dateStr);
-
-        obs_data_set_string(fileOutputSettings, "path", path);
+        obs_data_set_string(fileOutputSettings, "path", s_recordingFileName->c_str());
         //obs_data_set_string(fileOutputSettings, "muxer_settings", mux);
         obs_output_update(s_fileOutput, fileOutputSettings);
         obs_data_release(fileOutputSettings);
 
-        printf("%s: file output path set to %s\n", __func__, path);
+        printf("%s: file output path set to %s\n", __func__, s_recordingFileName->c_str());
 
         obs_output_start(s_fileOutput);
-
-        s_recordingFilePath = new std::string(path);
     }
 
     // set up stream output
@@ -331,7 +400,7 @@ static void startObsStreaming()
 static void stopObsStreaming()
 {
     if (s_fileOutput) {
-        std::cout << "Stopping file output " << *s_recordingFilePath << std::endl;
+        std::cout << "Stopping file output " << *s_recordingFileName << std::endl;
         obs_output_stop(s_fileOutput);
         usleep(500*1000);
         //obs_output_release(s_fileOutput), s_fileOutput = NULL;
@@ -364,8 +433,14 @@ int main(int argc, char* argv[])
         else if (0 == strcmp("--stream-key", argv[i]) && i < argc-1) {
             s_streamKey = new std::string(argv[++i]);
         }
-        else if (0 == strcmp("--cmdpipe", argv[i]) && i < argc-1) {
-            s_cmdPipeFileName = new std::string(argv[++i]);
+        else if (0 == strcmp("--pidfile", argv[i]) && i < argc-1) {
+            s_pidFileName = new std::string(argv[++i]);
+        }
+        else if (0 == strcmp("--statusfile", argv[i]) && i < argc-1) {
+            s_statusFileName = new std::string(argv[++i]);
+        }
+        else if (0 == strcmp("--recfile", argv[i]) && i < argc-1) {
+            s_recordingFileName = new std::string(argv[++i]);
         }
     }
 
@@ -385,8 +460,13 @@ int main(int argc, char* argv[])
     //std::cout << "audio pipe file: " << (s_audiopipeFileName ? *s_audiopipeFileName : "(null)") << std::endl;
     std::cout << "shmem file: " << (s_shmemFileName ? *s_shmemFileName : "(null)") << std::endl;
 
+    /*
     if (s_cmdPipeFileName) {
         std::thread t(&commandPipeThreadFunc);
+        t.detach();
+    }*/
+    if (s_pidFileName) {
+        std::thread t(&pidMonitorThreadFunc);
         t.detach();
     }
 
@@ -395,6 +475,8 @@ int main(int argc, char* argv[])
     resetObsVideoAndAudio();
 
     updateObsSettings();
+
+    writeStatusToFile("starting");
 
     startObsStreaming();
 
@@ -417,7 +499,11 @@ int main(int argc, char* argv[])
         }
     }
 
+    writeStatusToFile("stopping");
+
     stopObsStreaming();
+
+    writeStatusToFile("stopped");
 
     std::cout << "Main thread exiting.\n";
 
