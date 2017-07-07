@@ -10,11 +10,18 @@
 #include <obs.h>
 #include "vp_obs_audio_pipe_source.h"
 #include "vp_obs_video_shmem_source.h"
+#include <util/platform.h>
 
 
 #ifndef NSEC_PER_SEC
 #define NSEC_PER_SEC 1000000000ull
 #endif
+
+
+// We don't want streaming to run indefinitely because disk space for recordings is limited.
+// The process will self-terminate when this limit is exceeded.
+#define MAX_PROCESS_RUNTIME_HOURS 8
+
 
 
 static std::string *s_shmemFileName = NULL;
@@ -44,16 +51,17 @@ static void writeStatusToFile(const char *msg)
     }
 }
 
-
 static void pidMonitorThreadFunc()
 {
     std::cout << __func__ << " starting" << std::endl;
 
-    uint32_t sleepTime = 3*NSEC_PER_SEC;  // longer initial wait
+    uint32_t sleepIntv = 3*NSEC_PER_SEC;  // longer initial wait
+
+    uint64_t startT = os_gettime_ns();
 
     while (1) {
-        usleep(sleepTime);
-        sleepTime = 10*1000;
+        usleep(sleepIntv);
+        sleepIntv = 10*1000;
 
         struct stat st;
         int res = stat(s_pidFileName->c_str(), &st);
@@ -61,6 +69,14 @@ static void pidMonitorThreadFunc()
         if (res != 0) {
             // file doesn't exist anymore, so we should terminate
             std::cout << "pidfile has vanished (errno" << errno << "), will interrupt" << std::endl;
+            s_interrupted = true;
+            break;
+        }
+
+        // check that we're not running indefinitely
+        double timeElapsed = (double)(os_gettime_ns() - startT) / NSEC_PER_SEC;
+        if (timeElapsed > MAX_PROCESS_RUNTIME_HOURS*60*60) {
+            std::cout << "Process has been running for more than " <<MAX_PROCESS_RUNTIME_HOURS<< "hours, will exit" << std::endl;
             s_interrupted = true;
             break;
         }
