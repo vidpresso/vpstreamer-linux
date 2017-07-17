@@ -464,12 +464,14 @@ int main(int argc, char* argv[])
     // DEBUG
     if (0) {
         s_audiopipeFileName = new std::string("/tmp/vpaudio1.fifo");
-    }*/
-
+    }
     // DEBUG
-    if (1) {
+    if (0) {
         s_shmemFileName = new std::string("/vpconduit1");
+    }
+     */
 
+    if (s_shmemFileName) {
         g_vpObsVideo_shmemFileName = s_shmemFileName->c_str();
     }
 
