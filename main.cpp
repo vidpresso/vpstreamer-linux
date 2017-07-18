@@ -483,10 +483,6 @@ int main(int argc, char* argv[])
         std::thread t(&commandPipeThreadFunc);
         t.detach();
     }*/
-    if (s_pidFileName) {
-        std::thread t(&pidMonitorThreadFunc);
-        t.detach();
-    }
 
     initObsStreaming();
 
@@ -500,6 +496,11 @@ int main(int argc, char* argv[])
 
     s_streaming = true;
     s_interrupted = false;
+
+    if (s_pidFileName) {
+        std::thread t(&pidMonitorThreadFunc);
+        t.detach();
+    }
 
     // listen to interrupt signals
     signal(SIGINT, terminationSignalHandlerCb);
