@@ -324,7 +324,7 @@ static void updateObsSettings()
     obs_data_t *h264Settings = obs_data_create();
     obs_data_t *aacSettings  = obs_data_create();
 
-    int videoBitrate = 3.6*1024;
+    int videoBitrate = (int)(3.6*1024);
     int keyIntervalSecs = 2;
     const char *profile = "main";
     const char *preset = "veryfast";
@@ -334,16 +334,21 @@ static void updateObsSettings()
     obs_data_set_int(h264Settings, "keyint_sec", keyIntervalSecs);
     obs_data_set_string(h264Settings, "profile", profile);
     obs_data_set_string(h264Settings, "preset", preset);
-    if (x264opts) {
-        obs_data_set_string(h264Settings, "x264opts", x264opts);
+
+    if (0) {
+        obs_data_set_int(h264Settings, "keyint", 5);
     }
 
     std::cout << "Video settings: encoder bitrate "<<videoBitrate<<", interval "<<keyIntervalSecs<<"profile "<<profile<<std::endl;
 
-    /*
-    obs_data_set_string(h264Settings, "x264opts",
+    if (x264opts) {
+        obs_data_set_string(h264Settings, "x264opts", x264opts);
+        std::cout << "x264 opts string is: " << x264opts << std::endl;
+    }
+
+    /*obs_data_set_string(h264Settings, "x264opts",
                         "m8x8dct=1 aq-mode=2 bframes=1 chroma-qp-offset=1 colormatrix=smpte170m deblock=0:0 direct=auto ipratio=1.41 keyint=120 level=3.1 me=hex merange=16 min-keyint=auto mixed-refs=1 no-mbtree=0 partitions=i4x4,p8x8,b8x8 profile=high psy-rd=0.5:0.0 qcomp=0.6 qpmax=51 qpmin=10 qpstep=4 ratetol=10 rc-lookahead=30 ref=1 scenecut=40 subme=5 threads=0 trellis=2 weightb=1 weightp=2");
-     */
+    */
 
     int audioBitrate = 128;
     obs_data_set_bool(aacSettings, "cbr", true);

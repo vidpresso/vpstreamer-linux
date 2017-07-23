@@ -11,11 +11,51 @@
 #include <util/bmem.h>
 #include <util/threading.h>
 #include <util/platform.h>
-
+#include "image_utils.h"
 #include "sharedmem_consumer.h"
 
 
 const char *g_vpObsVideo_shmemFileName = NULL;
+
+static void writeDebugPNG(long frameIndex, int w, int h, uint8_t *buf, size_t srcRowBytes)
+{
+    char path[512];
+    snprintf(path, 511, "/tmp/vp_encoder_output/vp_encoder_debug_%04ld.png", frameIndex);
+
+    writePNG(path, w, h, srcRowBytes, buf);
+
+}
+
+static void writeDebugJPEG(long frameIndex, uint64_t ts, int w, int h, uint8_t *buf, size_t srcRowBytes)
+{
+    // write a JPEG image at half res (resizing is done by loop increment)
+    int dstW = w/2;
+    int dstH = h/2;
+    size_t dstRowBytes = (size_t)dstW*3;
+
+    uint8_t *tempBuf = (uint8_t *)malloc(dstRowBytes * dstH);
+
+    for (int dstY = 0; dstY < dstH; dstY++) {
+        uint8_t *s = (uint8_t *)buf + (dstY*2)*srcRowBytes;
+        uint8_t *d = tempBuf + dstY*dstRowBytes;
+        for (int x = 0; x < dstW; x++) {
+            d[0] = s[2];
+            d[1] = s[1];
+            d[2] = s[0];
+            d += 3;
+            s += 8;  // increment source by two pixels
+        }
+    }
+
+    double t = (double)ts / 1.0e9;
+
+    char path[512];
+    snprintf(path, 511, "/tmp/vp_encoder_output/vp_encoder_debug_%04ld__%.3f.jpg", frameIndex, t);
+
+    writeJPEG(path, dstW, dstH, dstRowBytes, tempBuf, 3, 30);
+
+    free(tempBuf);
+}
 
 
 typedef struct {
@@ -30,9 +70,6 @@ typedef struct {
     uint8_t *frameBuf;
     int32_t frameW;
     int32_t frameH;
-
-    int64_t frameIdx;
-    double lastWrittenFrameT;
 } VPSourceData;
 
 
@@ -42,6 +79,7 @@ static void *vp_shmem_video_consumer_thread(void *pdata)
     uint64_t last_time = os_gettime_ns();
     const uint64_t sleep_intv = 1000000;
     int64_t lastReadFrameId = 0;
+    uint64_t lastWrittenFrameT = 0;
 
     printf("%s starting\n", __func__);
 
@@ -53,7 +91,7 @@ static void *vp_shmem_video_consumer_thread(void *pdata)
         if ( !os_sleepto_ns(last_time += sleep_intv))
             last_time = os_gettime_ns();
 
-        uint64_t tdiff = last_time - prevT;
+        //uint64_t tdiff = last_time - prevT;
 
         if ( !os_atomic_load_bool(&sd->active))
             continue;
@@ -63,17 +101,17 @@ static void *vp_shmem_video_consumer_thread(void *pdata)
         if ( !shmData)
             continue;
 
+        uint64_t ts = os_gettime_ns();
+        double timeSinceLastFrame = (double)(ts - lastWrittenFrameT) / 1.0e9;
+
         int64_t magic = SHAREDMEM_MAGIC_NUM;
         if (0 != memcmp(&magic, &(shmData->magic), 8)) {
             printf("** %s: invalid magic num\n", __func__);
         }
-        else if (shmData->msgId > lastReadFrameId) {
-            //printf(".. %s: reading frame %ld, size %d*%d, audiosize %d\n", __func__,
-            //       shmData->msgId, shmData->w, shmData->h, shmData->audioDataSize);
+        else if (shmData->msgId > lastReadFrameId || timeSinceLastFrame > 1.0/15.0) {
+            //printf(".. writing video frame: reading frame %ld, size %d*%d, audiosize %d, time since last %.3f ms (%.6f)\n",
+            //       shmData->msgId, shmData->w, shmData->h, shmData->audioDataSize, timeSinceLastFrame*1000.0, (double)lastWrittenFrameT/1.0e9);
 
-            lastReadFrameId = shmData->msgId;
-
-            uint64_t ts = os_gettime_ns();
 
             uint w = (uint)shmData->w;
             uint h = (uint)shmData->h;
@@ -88,6 +126,14 @@ static void *vp_shmem_video_consumer_thread(void *pdata)
                     .format   = obsFormat,
                     .timestamp = ts
             };
+
+            if (0) {
+                //writeDebugJPEG(lastReadFrameId, ts, w, h, buf, rowBytes);
+                writeDebugPNG(lastReadFrameId, w, h, buf, rowBytes);
+            }
+
+            lastReadFrameId = shmData->msgId;
+            lastWrittenFrameT = ts;
 
             obs_source_output_video(sd->source, &obsFrame);
 
