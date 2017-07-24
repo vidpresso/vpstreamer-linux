@@ -2,6 +2,8 @@
 #include <thread>
 #include <atomic>
 #include <cstring>
+#include <vector>
+#include <sstream>
 #include <unistd.h>
 #include <signal.h>
 #include <sys/types.h>
@@ -23,6 +25,22 @@
 #define MAX_PROCESS_RUNTIME_HOURS 8
 
 
+template<typename T>
+void split(const std::string &s, char delim, T result) {
+    std::stringstream ss;
+    ss.str(s);
+    std::string item;
+    while (std::getline(ss, item, delim)) {
+        *(result++) = item;
+    }
+}
+
+std::vector<std::string> split(const std::string &s, char delim) {
+    std::vector<std::string> elems;
+    split(s, delim, std::back_inserter(elems));
+    return elems;
+}
+
 
 static std::string *s_shmemFileName = NULL;
 static std::string *s_pidFileName = NULL;
@@ -31,8 +49,11 @@ static std::string *s_recordingFileName = NULL;
 static uint32_t s_videoW = 1280;
 static uint32_t s_videoH = 720;
 static double s_audioSyncOffsetInSecs = 0.6;
-static std::string *s_streamUrl = NULL;
-static std::string *s_streamKey = NULL;
+//static std::string *s_streamUrl = NULL;
+//static std::string *s_streamKey = NULL;
+static std::vector<std::string> s_streamUrls;
+static std::vector<std::string> s_streamKeys;
+
 
 static std::atomic_bool s_running;
 static std::atomic_bool s_streaming;
@@ -235,8 +256,47 @@ static void initObsStreaming()
                                          "file output", NULL, NULL);
     }
 
-    std::cout << "stream dest url: " << (s_streamUrl ? *s_streamUrl : "(null)") << std::endl;
+    s_numStreams = std::min(MAXSERVICES, (int)s_streamUrls.size());
 
+    for (int i = 0; i < s_numStreams; i++) {
+        if (s_streamUrls[i].length() < 1)
+            continue;
+
+        const char *serverUrl = s_streamUrls[i].c_str();
+        const char *serverKey = "";
+        if (s_streamKeys.size() > i) {
+            serverKey = s_streamKeys[i].c_str();
+        }
+
+        std::cout << "stream "<<i<<" url: '" << serverUrl << "', key: '" << serverKey <<"'"<< std::endl;
+
+        s_streamOutputs[i] = obs_output_create("rtmp_output",
+                                               "vp stream output", NULL, NULL);
+
+
+        VPObsCallbackData *cbData = (VPObsCallbackData *)calloc(1, sizeof(VPObsCallbackData));
+        cbData->serviceIndex = i;
+        signal_handler_t *sh;
+        sh = obs_output_get_signal_handler(s_streamOutputs[i]);
+        signal_handler_connect(sh, "start", obsOutputStartCb, cbData);
+        signal_handler_connect(sh, "stop", obsOutputStopCb, cbData);
+        signal_handler_connect(sh, "reconnect", obsOutputReconnectCb, cbData);
+        signal_handler_connect(sh, "reconnect_success", obsOutputReconnectSuccessCb, cbData);
+
+
+        s_services[i] = obs_service_create("rtmp_custom",
+                                           "vp stream service", NULL, NULL);
+
+        obs_data_t *serviceSettings = obs_data_create();
+        obs_data_set_string(serviceSettings, "server", serverUrl);
+        obs_data_set_string(serviceSettings, "key", serverKey);
+        obs_service_update(s_services[i], serviceSettings);
+        obs_data_release(serviceSettings);
+    }
+    ///exit(1);  // DEBUG
+
+    //std::cout << "stream dest url: " << (s_streamUrl ? *s_streamUrl : "(null)") << std::endl;
+/*
     if (s_streamUrl && s_streamKey) {
         const char *serverUrl = s_streamUrl->c_str();  //"rtmp://a.rtmp.youtube.com/live2";
         const char *serverKey = s_streamKey->c_str(); //"dh5q-g412-mbpz-2t0u";
@@ -265,7 +325,7 @@ static void initObsStreaming()
         obs_service_update(s_services[0], serviceSettings);
         obs_data_release(serviceSettings);
     }
-
+*/
     s_h264Streaming = obs_video_encoder_create("obs_x264",
                                                "simple h264 stream", NULL, NULL);
 
@@ -406,15 +466,15 @@ static void startObsStreaming()
 
     // set up stream output
     if (s_numStreams > 0) {
+        for (int i = 0; i < s_numStreams; i++) {
+            obs_output_set_video_encoder(s_streamOutputs[i], s_h264Streaming);
 
-        obs_output_set_video_encoder(s_streamOutputs[0], s_h264Streaming);
+            if (s_aacStreaming) obs_output_set_audio_encoder(s_streamOutputs[i], s_aacStreaming, 0);
 
-        if (s_aacStreaming) obs_output_set_audio_encoder(s_streamOutputs[0], s_aacStreaming, 0);
+            obs_output_set_service(s_streamOutputs[i], s_services[i]);
 
-        obs_output_set_service(s_streamOutputs[0], s_services[0]);
-
-        obs_output_start(s_streamOutputs[0]);
-
+            obs_output_start(s_streamOutputs[i]);
+        }
     }
 }
 
@@ -448,11 +508,21 @@ int main(int argc, char* argv[])
         if (0 == strcmp("--shmemfile", argv[i]) && i < argc-1) {
             s_shmemFileName = new std::string(argv[++i]);
         }
-        else if (0 == strcmp("--stream-url", argv[i]) && i < argc-1) {
-            s_streamUrl = new std::string(argv[++i]);
+        else if (0 == strcmp("--stream-urls", argv[i]) && i < argc-1) {
+            //s_streamUrl = new std::string(argv[++i]);
+
+            std::string s(argv[++i]);
+            split(s, ',', std::back_inserter(s_streamUrls));
+
+            std::cout << "Got "<<s_streamUrls.size()<<" stream urls" << std::endl;
         }
-        else if (0 == strcmp("--stream-key", argv[i]) && i < argc-1) {
-            s_streamKey = new std::string(argv[++i]);
+        else if (0 == strcmp("--stream-keys", argv[i]) && i < argc-1) {
+            //s_streamKey = new std::string(argv[++i]);
+
+            std::string s(argv[++i]);
+            split(s, ',', std::back_inserter(s_streamKeys));
+
+            std::cout << "Got "<<s_streamKeys.size()<<" stream keys" << std::endl;
         }
         else if (0 == strcmp("--pidfile", argv[i]) && i < argc-1) {
             s_pidFileName = new std::string(argv[++i]);
