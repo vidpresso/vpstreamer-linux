@@ -379,13 +379,11 @@ static void resetObsVideoAndAudio()
     }
 }
 
-static void updateObsSettings()
+static void updateObsSettings(int videoBitrate, int audioBitrate, int keyIntervalSecs, bool useVBR)
 {
     obs_data_t *h264Settings = obs_data_create();
     obs_data_t *aacSettings  = obs_data_create();
 
-    int videoBitrate = (int)(3.6*1024);
-    int keyIntervalSecs = 2;
     const char *profile = "main";
     const char *preset = "veryfast";
     const char *x264opts = NULL;
@@ -395,11 +393,15 @@ static void updateObsSettings()
     obs_data_set_string(h264Settings, "profile", profile);
     obs_data_set_string(h264Settings, "preset", preset);
 
+    if (useVBR) {
+        obs_data_set_string(h264Settings, "rate_control", "VBR");
+    }
+
     if (0) {
         obs_data_set_int(h264Settings, "keyint", 5);
     }
 
-    std::cout << "Video settings: encoder bitrate "<<videoBitrate<<", interval "<<keyIntervalSecs<<"profile "<<profile<<std::endl;
+    std::cout << "Video settings: bitrate="<<videoBitrate<<" keyinterval="<<keyIntervalSecs<<" profile="<<profile<<" vbr="<<useVBR<<std::endl;
 
     if (x264opts) {
         obs_data_set_string(h264Settings, "x264opts", x264opts);
@@ -410,7 +412,6 @@ static void updateObsSettings()
                         "m8x8dct=1 aq-mode=2 bframes=1 chroma-qp-offset=1 colormatrix=smpte170m deblock=0:0 direct=auto ipratio=1.41 keyint=120 level=3.1 me=hex merange=16 min-keyint=auto mixed-refs=1 no-mbtree=0 partitions=i4x4,p8x8,b8x8 profile=high psy-rd=0.5:0.0 qcomp=0.6 qpmax=51 qpmin=10 qpstep=4 ratetol=10 rc-lookahead=30 ref=1 scenecut=40 subme=5 threads=0 trellis=2 weightb=1 weightp=2");
     */
 
-    int audioBitrate = 128;
     obs_data_set_bool(aacSettings, "cbr", true);
     obs_data_set_int(aacSettings, "bitrate", audioBitrate);
 
@@ -501,6 +502,11 @@ int main(int argc, char* argv[])
 {
     initObsLibraries();
 
+    int videoBitrate = 2500;
+    int audioBitrate = 128;
+    int keyint_secs = 2;
+    bool vbr = false;
+
     for (int i = 1; i < argc; i++) {
         /*if (0 == strcmp("--audiopipe", argv[i]) && i < argc-1) {
             s_audiopipeFileName = new std::string(argv[++i]);
@@ -533,6 +539,24 @@ int main(int argc, char* argv[])
         else if (0 == strcmp("--recfile", argv[i]) && i < argc-1) {
             s_recordingFileName = new std::string(argv[++i]);
         }
+        else if (0 == strcmp("--videobitrate", argv[i]) && i < argc-1) {
+            int v = atoi(argv[++i]);
+            if (v > 0 && v <= 50000)
+                videoBitrate = v;
+        }
+        else if (0 == strcmp("--audiobitrate", argv[i]) && i < argc-1) {
+            int v = atoi(argv[++i]);
+            if (v > 0 && v <= 2000)
+                audioBitrate = v;
+        }
+        else if (0 == strcmp("--keyintsecs", argv[i]) && i < argc-1) {
+            int v = atoi(argv[++i]);
+            if (v > 0 && v <= 999)
+                keyint_secs = v;
+        }
+        else if (0 == strcmp("--vbr", argv[i])) {
+            vbr = true;
+        }
     }
 
     /*
@@ -552,6 +576,7 @@ int main(int argc, char* argv[])
 
     //std::cout << "audio pipe file: " << (s_audiopipeFileName ? *s_audiopipeFileName : "(null)") << std::endl;
     std::cout << "shmem file: " << (s_shmemFileName ? *s_shmemFileName : "(null)") << std::endl;
+    std::cout << std::flush;
 
     /*
     if (s_cmdPipeFileName) {
@@ -563,7 +588,7 @@ int main(int argc, char* argv[])
 
     resetObsVideoAndAudio();
 
-    updateObsSettings();
+    updateObsSettings(videoBitrate, audioBitrate, keyint_secs, vbr);
 
     writeStatusToFile("starting");
 
@@ -582,6 +607,7 @@ int main(int argc, char* argv[])
     signal(SIGTERM, terminationSignalHandlerCb);
 
     while (1) {
+        std::cout << std::flush;
         usleep(10*1000);
 
         /*sleep(1);
