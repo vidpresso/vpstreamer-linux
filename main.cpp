@@ -539,6 +539,16 @@ int main(int argc, char* argv[])
         else if (0 == strcmp("--recfile", argv[i]) && i < argc-1) {
             s_recordingFileName = new std::string(argv[++i]);
         }
+        else if (0 == strcmp("--w", argv[i]) && i < argc-1) {
+            int v = atoi(argv[++i]);
+            if (v > 0 && v <= 9999)
+                s_videoW = (uint32_t)v;
+        }
+        else if (0 == strcmp("--h", argv[i]) && i < argc-1) {
+            int v = atoi(argv[++i]);
+            if (v > 0 && v <= 9999)
+                s_videoH = (uint32_t)v;
+        }
         else if (0 == strcmp("--videobitrate", argv[i]) && i < argc-1) {
             int v = atoi(argv[++i]);
             if (v > 0 && v <= 50000)
