@@ -433,6 +433,13 @@ static void updateObsSettings(int videoBitrate, int audioBitrate, int keyInterva
     obs_data_release(aacSettings);
 
     //obs_source_set_sync_offset(s_vpVideoSource, s_audioSyncOffsetInSecs*NSEC_PER_SEC);
+
+    obs_data_t *videoSettings = obs_data_create();
+    obs_data_set_int(videoSettings, "w", s_videoW);
+    obs_data_set_int(videoSettings, "h", s_videoH);
+    obs_source_update(s_vpVideoSource, videoSettings);
+    obs_data_release(videoSettings);
+
 }
 
 static void startObsStreaming()

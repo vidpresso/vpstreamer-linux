@@ -277,7 +277,7 @@ static void vp_update(void *data, obs_data_t *settings)
     int w = (int)obs_data_get_int(settings, "w");
     int h = (int)obs_data_get_int(settings, "h");
 
-    //VDPLog(@"%s, size %d * %d", __func__, w, h);
+    printf("%s, video size %d * %d\n", __func__, w, h);
 
     pthread_mutex_lock(&sd->frameBufLock);
 
