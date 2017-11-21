@@ -13,6 +13,7 @@
 #include <util/platform.h>
 #include "image_utils.h"
 #include "sharedmem_consumer.h"
+#include "vp_render_logger.h"
 
 
 const char *g_vpObsVideo_shmemFileName = NULL;
@@ -75,7 +76,7 @@ typedef struct {
 
 static void *vp_shmem_video_consumer_thread(void *pdata)
 {
-    VPSourceData *sd = pdata;
+    VPSourceData *sd = (VPSourceData *)pdata;
     uint64_t last_time = os_gettime_ns();
     const uint64_t sleep_intv = 1000000;
     int64_t lastReadFrameId = 0;
@@ -83,7 +84,7 @@ static void *vp_shmem_video_consumer_thread(void *pdata)
 
     printf("%s starting\n", __func__);
 
-    uint64_t audio_ts_offset_ns = (uint64_t)(0.2 * 1.0e9);
+    //uint64_t audio_ts_offset_ns = (uint64_t)(0.2 * 1.0e9);
 
     while (os_event_try(sd->event) == EAGAIN) {
         uint64_t prevT = last_time;
@@ -118,14 +119,14 @@ static void *vp_shmem_video_consumer_thread(void *pdata)
             int rowBytes = w*4;
             uint8_t *buf = (uint8_t *)shmData->data;
             enum video_format obsFormat = VIDEO_FORMAT_BGRA;
-            struct obs_source_frame obsFrame = {
-                    .data     = { [0] = buf },
-                    .linesize = { [0] = rowBytes },
-                    .width    = w,
-                    .height   = h,
-                    .format   = obsFormat,
-                    .timestamp = ts
-            };
+            struct obs_source_frame obsFrame;
+            obsFrame.data[0] = buf;
+            obsFrame.linesize[0] = (uint32_t)rowBytes;
+            obsFrame.width    = w;
+            obsFrame.height   = h;
+            obsFrame.format   = obsFormat;
+            obsFrame.timestamp = ts;
+
 
             if (0) {
                 //writeDebugJPEG(lastReadFrameId, ts, w, h, buf, rowBytes);
@@ -135,8 +136,9 @@ static void *vp_shmem_video_consumer_thread(void *pdata)
             lastReadFrameId = shmData->msgId;
             lastWrittenFrameT = ts;
 
-            obs_source_output_video(sd->source, &obsFrame);
-
+            if (os_atomic_load_bool(&sd->active))
+                obs_source_output_video(sd->source, &obsFrame);
+#if 0
             size_t audioNumSamples = shmData->audioDataSize / sizeof(int16_t);
             if (audioNumSamples > 0) {
                 struct obs_source_audio audioData;
@@ -179,6 +181,15 @@ static void *vp_shmem_video_consumer_thread(void *pdata)
                 }
                  */
             }
+#endif
+
+            if (g_vpRenderLogger) {
+                char msg[512];
+                snprintf(msg, 511, "video frame %ld, size %d*%d, time since last %.3f ms",
+                         shmData->msgId, shmData->w, shmData->h, timeSinceLastFrame*1000.0);
+                g_vpRenderLogger->writeText(VPRenderLogger::VP_RENDERLOG_VIDEO, msg);
+            }
+
         }
 
         vpconduit_shm_unlock();
@@ -202,6 +213,8 @@ static void *vp_create(obs_data_t *settings, obs_source_t *source)
 {
     printf("%s started\n", __func__);
 
+    g_vpRenderLogger->writeText(VPRenderLogger::VP_RENDERLOG_STATUS, "vp video source create");
+
     if ( !g_vpObsVideo_shmemFileName || !vpconduit_shm_open_consumer(g_vpObsVideo_shmemFileName)) {
         printf("** %s failed: shmem file name is %s, could not open\n", __func__, g_vpObsVideo_shmemFileName);
         return NULL;
@@ -210,7 +223,7 @@ static void *vp_create(obs_data_t *settings, obs_source_t *source)
     int w = (int)obs_data_get_int(settings, "w");
     int h = (int)obs_data_get_int(settings, "h");
 
-    VPSourceData *sd = bzalloc(sizeof(VPSourceData));
+    VPSourceData *sd = (VPSourceData *) bzalloc(sizeof(VPSourceData));
 
     sd->source = source;
     os_atomic_set_bool(&sd->active, true);
@@ -218,7 +231,7 @@ static void *vp_create(obs_data_t *settings, obs_source_t *source)
 
     sd->frameW = (w > 0) ? w : 1280;
     sd->frameH = (h > 0) ? h : 720;
-    sd->frameBuf = bmalloc(sd->frameW * 4 * sd->frameH);
+    sd->frameBuf = (uint8_t *) bmalloc(sd->frameW * 4 * sd->frameH);
 
     pthread_mutex_init_value(&sd->frameBufLock);
 
@@ -234,6 +247,8 @@ static void *vp_create(obs_data_t *settings, obs_source_t *source)
 
     printf("%s finished\n", __func__);
 
+    g_vpRenderLogger->writeText(VPRenderLogger::VP_RENDERLOG_STATUS, "vp video source finished.");
+
     return sd;
 
     fail:
@@ -244,7 +259,7 @@ static void vp_destroy(void *data)
 {
     printf("%s started\n", __func__);
 
-    VPSourceData *sd = data;
+    VPSourceData *sd = (VPSourceData *)data;
     if (sd) {
         os_atomic_set_bool(&sd->active, false);
 
@@ -271,7 +286,7 @@ static void vp_destroy(void *data)
 
 static void vp_update(void *data, obs_data_t *settings)
 {
-    VPSourceData *sd = data;
+    VPSourceData *sd = (VPSourceData *)data;
     if ( !sd) return;
 
     int w = (int)obs_data_get_int(settings, "w");
@@ -285,19 +300,20 @@ static void vp_update(void *data, obs_data_t *settings)
 
     sd->frameW = (w > 0) ? w : 1280;
     sd->frameH = (h > 0) ? h : 720;
-    sd->frameBuf = bmalloc(sd->frameW * 4 * sd->frameH);
+    sd->frameBuf = (uint8_t *)bmalloc(sd->frameW * 4 * sd->frameH);
 
     pthread_mutex_unlock(&sd->frameBufLock);
 }
 
+
+
 struct obs_source_info vp_source_info = {
         .id             = VP_VIDEO_SOURCE_OBS_ID,
         .type           = OBS_SOURCE_TYPE_INPUT,
-        .output_flags   = OBS_SOURCE_ASYNC_VIDEO | OBS_SOURCE_AUDIO | OBS_SOURCE_DO_NOT_DUPLICATE,
+        .output_flags   = OBS_SOURCE_ASYNC_VIDEO | /*OBS_SOURCE_AUDIO |*/ OBS_SOURCE_DO_NOT_DUPLICATE,
         .get_name       = vp_get_name,
         .create         = vp_create,
-        .destroy        = vp_destroy,
-        .update         = vp_update,
+        .destroy        = vp_destroy
 };
 
 
@@ -305,6 +321,9 @@ void vp_obs_video_source_register(VPObsVideoSourceDataCallback dataCb, void *use
 {
     //g_dataCb = dataCb;
     //g_dataCbUserData = userData;
+
+    // this needs to be here (not in initializer), or clang will complain in C++ mode
+    vp_source_info.update = vp_update;
 
     obs_register_source(&vp_source_info);
 }

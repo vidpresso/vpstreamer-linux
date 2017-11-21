@@ -20,7 +20,7 @@ set_target_properties(obs PROPERTIES
 
 set(OBS_BASE_LIBRARIES obs X11 ${PNG_LIBRARIES} turbojpeg)
 
-set(SOURCE_FILES main.cpp image_utils.c vp_obs_video_shmem_source.c vp_obs_video_shmem_source.h vp_obs_audio_pipe_source.c vp_obs_audio_pipe_source.h sharedmem_consumer.c sharedmem_consumer.h)
+set(SOURCE_FILES main.cpp image_utils.c vp_obs_video_shmem_source.cpp vp_obs_video_shmem_source.h vp_obs_audio_pipe_source.cpp vp_obs_audio_pipe_source.h sharedmem_consumer.c sharedmem_consumer.h vp_audio_pipe_consumer.cpp vp_audio_pipe_consumer.h time_utils.c time_utils.h vp_render_logger.cpp vp_render_logger.h)
 add_executable(VPStreamer ${SOURCE_FILES})
 
 target_include_directories(VPStreamer PUBLIC

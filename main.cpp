@@ -13,6 +13,8 @@
 #include "vp_obs_audio_pipe_source.h"
 #include "vp_obs_video_shmem_source.h"
 #include <util/platform.h>
+#include "vp_render_logger.h"
+#include "time_utils.h"
 
 
 #ifndef NSEC_PER_SEC
@@ -43,9 +45,11 @@ std::vector<std::string> split(const std::string &s, char delim) {
 
 
 static std::string *s_shmemFileName = NULL;
+static std::string *s_audiopipeFileName = NULL;
 static std::string *s_pidFileName = NULL;
 static std::string *s_statusFileName = NULL;
 static std::string *s_recordingFileName = NULL;
+static std::string *s_renderLogDir = NULL;
 static uint32_t s_videoW = 1280;
 static uint32_t s_videoH = 720;
 static double s_audioSyncOffsetInSecs = 0.6;
@@ -74,22 +78,22 @@ static void writeStatusToFile(const char *msg)
 
 static void pidMonitorThreadFunc()
 {
-    std::cout << __func__ << " starting" << std::endl;
+    printf("%s starting\n", __func__);
 
-    uint32_t sleepIntv = 3*NSEC_PER_SEC;  // longer initial wait
+    uint32_t sleepIntv = 50*1000; // 1*NSEC_PER_SEC;  // longer initial wait
 
     uint64_t startT = os_gettime_ns();
 
     while (1) {
         usleep(sleepIntv);
-        sleepIntv = 10*1000;
+        sleepIntv = 50*1000;
 
         struct stat st;
         int res = stat(s_pidFileName->c_str(), &st);
 
         if (res != 0) {
             // file doesn't exist anymore, so we should terminate
-            std::cout << "pidfile has vanished (errno" << errno << "), will interrupt" << std::endl;
+            printf("pidfile has vanished (errno %d), will interrupt\n", errno);
             s_interrupted = true;
             break;
         }
@@ -97,13 +101,13 @@ static void pidMonitorThreadFunc()
         // check that we're not running indefinitely
         double timeElapsed = (double)(os_gettime_ns() - startT) / NSEC_PER_SEC;
         if (timeElapsed > MAX_PROCESS_RUNTIME_HOURS*60*60) {
-            std::cout << "Process has been running for more than " <<MAX_PROCESS_RUNTIME_HOURS<< "hours, will exit" << std::endl;
+            printf("Process has been running for more than %d hours, will exit\n", MAX_PROCESS_RUNTIME_HOURS);
             s_interrupted = true;
             break;
         }
     }
 
-    std::cout << __func__ << " finished" << std::endl;
+    printf("%s finished\n", __func__);
 }
 /*
 static void commandPipeThreadFunc()
@@ -243,7 +247,7 @@ static void initObsLibraries()
     printf("%s loading standard modules done\n", __func__);
 
     vp_obs_video_source_register(NULL, NULL);
-    //vp_audio_source_register();
+    vp_audio_source_register();
     //test_sinewave_register();
 
     printf("%s done\n", __func__);
@@ -332,6 +336,9 @@ static void initObsStreaming()
     s_vpVideoSource = obs_source_create(VP_VIDEO_SOURCE_OBS_ID,
                                         "vidpresso live stream", NULL, NULL);
 
+    s_vpAudioSource = obs_source_create(VP_AUDIO_SOURCE_OBS_ID,
+                                        "vidpresso audio stream", NULL, NULL);
+
     if (1) {
         s_aacStreaming = obs_audio_encoder_create("ffmpeg_aac",
                                                   "simple aac", NULL, 0, NULL);
@@ -341,6 +348,7 @@ static void initObsStreaming()
 
 
     obs_set_output_source(0, s_vpVideoSource);
+    obs_set_output_source(1, s_vpAudioSource);
 }
 
 static void resetObsVideoAndAudio()
@@ -494,10 +502,20 @@ static void stopObsStreaming()
         usleep(500*1000);
         //obs_output_release(s_fileOutput), s_fileOutput = NULL;
     }
-    std::cout << "Streaming stopped" << std::endl;
+    for (int i = 0; i < s_numStreams; i++) {
+        std::cout << "Stopping stream output " << i << std::endl;
+        obs_output_stop(s_streamOutputs[i]);
+    }
+
+    std::cout << "Clearing and destroying output sources..." << std::endl;
 
     obs_set_output_source(0, NULL);
+    obs_set_output_source(1, NULL);
+
+    obs_source_release(s_vpAudioSource), s_vpAudioSource = NULL;
     obs_source_release(s_vpVideoSource), s_vpVideoSource = NULL;
+
+    std::cout << "Streaming stopped." << std::endl;
 }
 
 
@@ -515,9 +533,9 @@ int main(int argc, char* argv[])
     bool vbr = false;
 
     for (int i = 1; i < argc; i++) {
-        /*if (0 == strcmp("--audiopipe", argv[i]) && i < argc-1) {
+        if (0 == strcmp("--audiopipe", argv[i]) && i < argc-1) {
             s_audiopipeFileName = new std::string(argv[++i]);
-        }*/
+        }
         if (0 == strcmp("--shmemfile", argv[i]) && i < argc-1) {
             s_shmemFileName = new std::string(argv[++i]);
         }
@@ -545,6 +563,9 @@ int main(int argc, char* argv[])
         }
         else if (0 == strcmp("--recfile", argv[i]) && i < argc-1) {
             s_recordingFileName = new std::string(argv[++i]);
+        }
+        else if (0 == strcmp("--segmentedlogdir", argv[i]) && i < argc-1) {
+            s_renderLogDir = new std::string(argv[++i]);
         }
         else if (0 == strcmp("--w", argv[i]) && i < argc-1) {
             int v = atoi(argv[++i]);
@@ -587,13 +608,23 @@ int main(int argc, char* argv[])
     }
      */
 
+    std::cout << "audio pipe file: " << (s_audiopipeFileName ? *s_audiopipeFileName : "(null)") << std::endl;
+    std::cout << "shmem file: " << (s_shmemFileName ? *s_shmemFileName : "(null)") << std::endl;
+    std::cout << "segmented renderlog file: " << (s_renderLogDir ? *s_renderLogDir : "(null)") << std::endl;
+    std::cout << std::flush;
+
     if (s_shmemFileName) {
         g_vpObsVideo_shmemFileName = s_shmemFileName->c_str();
     }
+    if (s_audiopipeFileName) {
+        g_vpObsAudio_pipeFileName = s_audiopipeFileName->c_str();
+    }
 
-    //std::cout << "audio pipe file: " << (s_audiopipeFileName ? *s_audiopipeFileName : "(null)") << std::endl;
-    std::cout << "shmem file: " << (s_shmemFileName ? *s_shmemFileName : "(null)") << std::endl;
-    std::cout << std::flush;
+    if (s_renderLogDir) {
+         g_vpRenderLogger = new VPRenderLogger(s_renderLogDir, VPMonotonicTime());
+
+        g_vpRenderLogger->writeText(VPRenderLogger::VP_RENDERLOG_STATUS, "Start");
+    }
 
     /*
     if (s_cmdPipeFileName) {
@@ -614,6 +645,7 @@ int main(int argc, char* argv[])
     s_streaming = true;
     s_interrupted = false;
 
+    std::cout << "listening to pidfile: " << (s_pidFileName ? *s_pidFileName : "(null") << std::endl;
     if (s_pidFileName) {
         std::thread t(&pidMonitorThreadFunc);
         t.detach();
@@ -641,6 +673,8 @@ int main(int argc, char* argv[])
     stopObsStreaming();
 
     writeStatusToFile("stopped");
+
+    g_vpRenderLogger->writeText(VPRenderLogger::VP_RENDERLOG_STATUS, "Stop.");
 
     std::cout << "Main thread exiting.\n";
 
