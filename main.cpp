@@ -52,7 +52,7 @@ static std::string *s_recordingFileName = NULL;
 static std::string *s_renderLogDir = NULL;
 static uint32_t s_videoW = 1280;
 static uint32_t s_videoH = 720;
-static double s_audioSyncOffsetInSecs = 0.6;
+static double s_audioSyncOffsetInSecs = 0.333;
 //static std::string *s_streamUrl = NULL;
 //static std::string *s_streamKey = NULL;
 static std::vector<std::string> s_streamUrls;
@@ -349,6 +349,9 @@ static void initObsStreaming()
 
     obs_set_output_source(0, s_vpVideoSource);
     obs_set_output_source(1, s_vpAudioSource);
+
+    // configure audio source
+    obs_source_set_sync_offset(s_vpAudioSource, (int64_t)(s_audioSyncOffsetInSecs*NSEC_PER_SEC));
 }
 
 static void resetObsVideoAndAudio()
@@ -595,6 +598,13 @@ int main(int argc, char* argv[])
         else if (0 == strcmp("--vbr", argv[i])) {
             vbr = true;
         }
+        else if (0 == strcmp("--audiosyncoffset", argv[i]) && i < argc-1) {
+            double v = atof(argv[++i]);
+            if (finite(v)) {
+                s_audioSyncOffsetInSecs = v;
+            }
+        }
+
     }
 
     /*
@@ -611,6 +621,7 @@ int main(int argc, char* argv[])
     std::cout << "audio pipe file: " << (s_audiopipeFileName ? *s_audiopipeFileName : "(null)") << std::endl;
     std::cout << "shmem file: " << (s_shmemFileName ? *s_shmemFileName : "(null)") << std::endl;
     std::cout << "segmented renderlog file: " << (s_renderLogDir ? *s_renderLogDir : "(null)") << std::endl;
+    std::cout << "audio delay: " << s_audioSyncOffsetInSecs << " s" << std::endl;
     std::cout << std::flush;
 
     if (s_shmemFileName) {
