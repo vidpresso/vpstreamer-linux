@@ -12,5 +12,5 @@ Prebuilt libobs static library binaries are provided in libobs/lib.
 == License
 
 This software adopts the libobs license which is GNU Public License (GPL) version 2.
-The full license text can be found in the file LICENSE_GPLv2.txt. 
+The full license text can be found in the file 'COPYING'. 
 
