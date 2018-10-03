@@ -355,6 +355,7 @@ static void initObsStreaming()
 
     if (1) {
         s_aacStreaming = obs_audio_encoder_create("ffmpeg_aac",
+                                                  //"libfdk_aac",
                                                   "simple aac", NULL, 0, NULL);
 
     }
@@ -375,7 +376,7 @@ static void resetObsVideoAndAudio()
     struct obs_audio_info oai;
     memset(&oai, 0, sizeof(oai));
 
-    oai.samples_per_sec = 44100;
+    oai.samples_per_sec = 48000;
     oai.speakers = SPEAKERS_STEREO;
 
     if ((ret = obs_reset_audio(&oai)) != 0) {
