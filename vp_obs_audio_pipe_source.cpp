@@ -74,9 +74,68 @@ static inline uint64_t get_sample_time(size_t frames, uint_fast32_t rate)
 }
 
 
-#define STARTUP_TIMEOUT_NS (500 * NSEC_PER_MSEC)
+// first seconds of audio data coming in from VPConduit can be very choppy.
+// to avoid encoding that, we'll just ignore first seconds and then render a small fade
+// on the first buffer.
+#define STARTUP_TIMEOUT_NS (2000 * NSEC_PER_MSEC)
 
 
+
+
+/* ---- TEST: sinewave ---- */
+
+/* middle C */
+static const double SINEWAVE_RATE = 261.63/48000.0;
+
+#ifndef M_PI
+#define M_PI 3.1415926535897932384626433832795
+#endif
+
+#define M_PI_X2 M_PI*2
+
+static void *sinewave_thread(void *pdata)
+{
+    VPSourceData *swd = (VPSourceData *)pdata;
+    uint64_t last_time = os_gettime_ns();
+    uint64_t ts = 0;
+    double cos_val = 0.0;
+    uint8_t bytes[480];
+
+    while (os_event_try(swd->event) == EAGAIN) {
+        if (!os_sleepto_ns(last_time += 10000000))
+            last_time = os_gettime_ns();
+
+        if (!os_atomic_load_bool(&swd->active))
+            continue;
+
+        for (size_t i = 0; i < 480; i++) {
+            cos_val += SINEWAVE_RATE * M_PI_X2;
+            if (cos_val > M_PI_X2)
+                cos_val -= M_PI_X2;
+
+            double wave = cos(cos_val) * 0.5;
+            bytes[i] = (uint8_t)((wave+1.0)*0.5 * 255.0);
+        }
+
+        struct obs_source_audio data;
+        data.data[0] = bytes;
+        data.frames = 480;
+        data.speakers = SPEAKERS_MONO;
+        data.samples_per_sec = 48000;
+        data.timestamp = ts;
+        data.format = AUDIO_FORMAT_U8BIT;
+        obs_source_output_audio(swd->source, &data);
+
+        ts += 10000000;
+    }
+
+    return NULL;
+}
+
+
+
+
+// ----
 
 static void *vp_audio_driver_consumer_thread(void *pdata)
 {
@@ -85,11 +144,14 @@ static void *vp_audio_driver_consumer_thread(void *pdata)
     uint64_t first_ts = 0;
     int64_t totalPackets = 0;
     int64_t totalFrames = 0;
+    bool didOutput = false;
 
     const long bufSize = 40000;
     int16_t buf[bufSize];
 
-
+    // debugging setup
+    double cos_val = 0.0;
+    bool renderSineWave = false;
     FILE *debugRecFile = NULL;
 #if WRITE_AUDIO_DEBUG_FILE
     debugRecFile = fopen("/tmp/vpaudiorec_streamer.raw", "wb");
@@ -107,6 +169,39 @@ static void *vp_audio_driver_consumer_thread(void *pdata)
                 fwrite(buf, 1, numFrames*2*sizeof(int16_t), debugRecFile);
             }
 
+            if (renderSineWave) {
+                for (size_t i = 0; i < numFrames; i++) {
+                    cos_val += SINEWAVE_RATE * M_PI_X2;
+                    if (cos_val > M_PI_X2)
+                        cos_val -= M_PI_X2;
+
+                    double wave = cos(cos_val) * 0.5;
+
+                    int16_t orig_l = buf[i*2];
+                    double mixv = wave * 32767.0 * 0.75;
+                    mixv = mixv*0.3 + orig_l*0.7;
+
+                    int16_t v = (int16_t)(mixv);
+                    buf[i*2] = v;
+                    buf[i*2+1] = v;
+                }
+            }
+
+            int16_t minV = INT16_MAX;
+            int16_t maxV = INT16_MIN;
+            //const double VOL_M = 0.95;
+            for (size_t i = 0; i < numFrames; i++) {
+                int16_t orig_l = buf[i*2];
+                int16_t orig_r = buf[i*2+1];
+                if (orig_l < minV) minV = orig_l;
+                if (orig_l > maxV) maxV = orig_l;
+                if (orig_r < minV) minV = orig_r;
+                if (orig_r > maxV) maxV = orig_r;
+
+                //buf[i*2] = (int16_t)(orig_l * VOL_M);
+                //buf[i*2+1] = (int16_t)(orig_l * VOL_M);
+            }
+
             struct obs_source_audio data;
             //data.data[0] = (const uint8_t *)sharedMem->data;
             data.data[0] = (const uint8_t *)buf;
@@ -120,8 +215,25 @@ static void *vp_audio_driver_consumer_thread(void *pdata)
                 first_ts = data.timestamp + STARTUP_TIMEOUT_NS;
 
             if (data.timestamp > first_ts) {
-                if (os_atomic_load_bool(&sd->active))
+                if ( !didOutput) {
+                    for (size_t i = 0; i < numFrames; i++) {
+                        int16_t orig_l = buf[i*2];
+                        int16_t orig_r = buf[i*2+1];
+
+                        // render a ramp within this buffer so we get a small fade at the start of audio
+                        double m = (double)i/numFrames;
+                        int16_t l = (int16_t)(orig_l * m);
+                        int16_t r = (int16_t)(orig_r * m);
+
+                        buf[i*2] = l;
+                        buf[i*2+1] = r;
+                    }
+                }
+
+                if (os_atomic_load_bool(&sd->active)) {
                     obs_source_output_audio(sd->source, &data);
+                    didOutput = true;
+                }
             }
 
             totalPackets++;
@@ -129,8 +241,8 @@ static void *vp_audio_driver_consumer_thread(void *pdata)
 
             if (g_vpRenderLogger) {
                 char msg[512];
-                snprintf(msg, 511, "audio packet %ld, samples in packet %ld, timestamp %lu",
-                         totalPackets, numSamplesRead, data.timestamp);
+                snprintf(msg, 511, "audio packet %ld, samples in packet %ld, timestamp %lu, audio data min/max %d / %d",
+                         totalPackets, numSamplesRead, data.timestamp, minV, maxV);
                 g_vpRenderLogger->writeText(VPRenderLogger::VP_RENDERLOG_AUDIO, msg);
             }
         }
@@ -141,6 +253,8 @@ static void *vp_audio_driver_consumer_thread(void *pdata)
 
     return NULL;
 }
+
+
 
 
 
@@ -199,6 +313,7 @@ static void *vp_audio_source_create(obs_data_t *settings,
         goto fail;
 
     if (pthread_create(&sd->driver_consumer_thread, NULL, vp_audio_driver_consumer_thread, sd) != 0)
+    //if (pthread_create(&sd->driver_consumer_thread, NULL, sinewave_thread, sd) != 0)
         goto fail;
 
     sd->initialized_thread = true;
