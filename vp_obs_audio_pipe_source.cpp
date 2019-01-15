@@ -48,6 +48,12 @@
 #define WRITE_AUDIO_DEBUG_FILE 0
 
 
+// first seconds of audio data coming in from VPConduit can be very choppy.
+// to avoid encoding that, we'll just ignore first seconds and then render a small fade
+// on the first buffer.
+#define STARTUP_TIMEOUT_NS (2000 * NSEC_PER_MSEC)
+
+
 const char *g_vpObsAudio_pipeFileName = NULL;
 
 
@@ -74,10 +80,6 @@ static inline uint64_t get_sample_time(size_t frames, uint_fast32_t rate)
 }
 
 
-// first seconds of audio data coming in from VPConduit can be very choppy.
-// to avoid encoding that, we'll just ignore first seconds and then render a small fade
-// on the first buffer.
-#define STARTUP_TIMEOUT_NS (2000 * NSEC_PER_MSEC)
 
 
 
@@ -170,6 +172,7 @@ static void *vp_audio_driver_consumer_thread(void *pdata)
             }
 
             if (renderSineWave) {
+                const double mixLevel = 0.8;
                 for (size_t i = 0; i < numFrames; i++) {
                     cos_val += SINEWAVE_RATE * M_PI_X2;
                     if (cos_val > M_PI_X2)
@@ -179,7 +182,7 @@ static void *vp_audio_driver_consumer_thread(void *pdata)
 
                     int16_t orig_l = buf[i*2];
                     double mixv = wave * 32767.0 * 0.75;
-                    mixv = mixv*0.3 + orig_l*0.7;
+                    mixv = mixv*mixLevel + orig_l*(1.0 - mixLevel);
 
                     int16_t v = (int16_t)(mixv);
                     buf[i*2] = v;
@@ -189,7 +192,7 @@ static void *vp_audio_driver_consumer_thread(void *pdata)
 
             int16_t minV = INT16_MAX;
             int16_t maxV = INT16_MIN;
-            //const double VOL_M = 0.95;
+            ///const double VOL_M = 0.95;
             for (size_t i = 0; i < numFrames; i++) {
                 int16_t orig_l = buf[i*2];
                 int16_t orig_r = buf[i*2+1];
@@ -198,8 +201,9 @@ static void *vp_audio_driver_consumer_thread(void *pdata)
                 if (orig_r < minV) minV = orig_r;
                 if (orig_r > maxV) maxV = orig_r;
 
-                //buf[i*2] = (int16_t)(orig_l * VOL_M);
-                //buf[i*2+1] = (int16_t)(orig_l * VOL_M);
+                // TESTING
+                ///buf[i*2] = (int16_t)(orig_l * VOL_M);
+                ///buf[i*2+1] = (int16_t)(orig_l * VOL_M);
             }
 
             struct obs_source_audio data;

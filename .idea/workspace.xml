@@ -15,7 +15,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf05c557-3370-4cf9-84d9-781fa953e6ff" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vp_obs_audio_pipe_source.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/vp_obs_audio_pipe_source.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -37,12 +36,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cpp" value="1492" />
+          <entry key="cpp" value="1657" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="ObjectiveC" value="1492" />
+          <entry key="ObjectiveC" value="1657" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -83,11 +82,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/vp_obs_audio_pipe_source.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
+            <state relative-caret-position="121">
+              <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
               <folding>
                 <element signature="e#2255#2301#0" expanded="true" />
-                <element signature="e#4045#4104#0" expanded="true" />
+                <element signature="e#4047#4106#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -97,7 +96,7 @@
         <entry file="file://$PROJECT_DIR$/vp_audio_pipe_consumer.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="60">
-              <caret line="157" column="1" lean-forward="true" selection-start-line="157" selection-start-column="1" selection-end-line="157" selection-end-column="1" />
+              <caret line="157" column="1" selection-start-line="157" selection-start-column="1" selection-end-line="157" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -106,7 +105,7 @@
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="258">
-              <caret line="353" column="66" lean-forward="true" selection-start-line="353" selection-start-column="66" selection-end-line="353" selection-end-column="66" />
+              <caret line="353" column="66" selection-start-line="353" selection-start-column="66" selection-end-line="353" selection-end-column="66" />
             </state>
           </provider>
         </entry>
@@ -399,18 +398,18 @@
       <workItem from="1511288395804" duration="3074000" />
       <workItem from="1512260956467" duration="1929000" />
       <workItem from="1538138479372" duration="605000" />
-      <workItem from="1538412114178" duration="15822000" />
+      <workItem from="1538412114178" duration="19960000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="164413000" />
+    <option name="totallyTimeSpent" value="168551000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1615" height="993" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24601658" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24601658" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -424,7 +423,7 @@
       <window_info anchor="bottom" id="CMake" order="8" weight="0.32934782" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="11" visible="true" weight="0.31098264" />
+      <window_info active="true" anchor="bottom" id="Messages" order="11" visible="true" weight="0.31098264" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -585,7 +584,7 @@
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="258">
-          <caret line="353" column="66" lean-forward="true" selection-start-line="353" selection-start-column="66" selection-end-line="353" selection-end-column="66" />
+          <caret line="353" column="66" selection-start-line="353" selection-start-column="66" selection-end-line="353" selection-end-column="66" />
         </state>
       </provider>
     </entry>
@@ -599,17 +598,17 @@
     <entry file="file://$PROJECT_DIR$/vp_audio_pipe_consumer.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
-          <caret line="157" column="1" lean-forward="true" selection-start-line="157" selection-start-column="1" selection-end-line="157" selection-end-column="1" />
+          <caret line="157" column="1" selection-start-line="157" selection-start-column="1" selection-end-line="157" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vp_obs_audio_pipe_source.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
+        <state relative-caret-position="121">
+          <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
           <folding>
             <element signature="e#2255#2301#0" expanded="true" />
-            <element signature="e#4045#4104#0" expanded="true" />
+            <element signature="e#4047#4106#0" expanded="true" />
           </folding>
         </state>
       </provider>
