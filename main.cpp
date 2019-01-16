@@ -399,7 +399,21 @@ static void resetObsVideoAndAudio()
     ovi.output_format = VIDEO_FORMAT_RGBA;
 
     if ((ret = obs_reset_video(&ovi)) != 0) {
-        printf("** %s: obs_reset_video failed, error %d\n", __func__, ret);
+        std::string errStr = "";
+        switch (ret) {
+            case OBS_VIDEO_FAIL:
+                errStr = "VIDEO_FAIL"; break;
+            case OBS_VIDEO_INVALID_PARAM:
+                errStr = "VIDEO_INVALID_PARAM"; break;
+            default: {
+                std::stringstream ss;
+                ss << "error code " << ret;
+                errStr = ss.str();
+                break;
+            }
+        }
+        printf("** %s: obs_reset_video failed with %s - can't recover\n", __func__, errStr.c_str());
+        exit(ret);
     } else {
         printf("%s video reset complete\n", __func__);
     }
@@ -435,7 +449,11 @@ static void updateObsSettings(int videoBitrate, int audioBitrate, int keyInterva
     }
 
     /*obs_data_set_string(h264Settings, "x264opts",
-                        "m8x8dct=1 aq-mode=2 bframes=1 chroma-qp-offset=1 colormatrix=smpte170m deblock=0:0 direct=auto ipratio=1.41 keyint=120 level=3.1 me=hex merange=16 min-keyint=auto mixed-refs=1 no-mbtree=0 partitions=i4x4,p8x8,b8x8 profile=high psy-rd=0.5:0.0 qcomp=0.6 qpmax=51 qpmin=10 qpstep=4 ratetol=10 rc-lookahead=30 ref=1 scenecut=40 subme=5 threads=0 trellis=2 weightb=1 weightp=2");
+                        "m8x8dct=1 aq-mode=2 bframes=1 chroma-qp-offset=1 colormatrix=smpte170m deblock=0:0 "
+                        "direct=auto ipratio=1.41 keyint=120 level=3.1 me=hex merange=16 min-keyint=auto "
+                        "mixed-refs=1 no-mbtree=0 partitions=i4x4,p8x8,b8x8 profile=high psy-rd=0.5:0.0 "
+                        "qcomp=0.6 qpmax=51 qpmin=10 qpstep=4 ratetol=10 rc-lookahead=30 ref=1 scenecut=40 "
+                        "subme=5 threads=0 trellis=2 weightb=1 weightp=2");
     */
 
     obs_data_set_bool(aacSettings, "cbr", true);
@@ -622,7 +640,7 @@ int main(int argc, char* argv[])
 
     }
 
-    /*
+
     // DEBUG
     if (0) {
         s_audiopipeFileName = new std::string("/tmp/vpaudio1.fifo");
@@ -631,7 +649,7 @@ int main(int argc, char* argv[])
     if (0) {
         s_shmemFileName = new std::string("/vpconduit1");
     }
-     */
+
 
     std::cout << "audio pipe file: " << (s_audiopipeFileName ? *s_audiopipeFileName : "(null)") << std::endl;
     std::cout << "shmem file: " << (s_shmemFileName ? *s_shmemFileName : "(null)") << std::endl;
@@ -646,11 +664,13 @@ int main(int argc, char* argv[])
         g_vpObsAudio_pipeFileName = s_audiopipeFileName->c_str();
     }
 
-    if (s_renderLogDir) {
-         g_vpRenderLogger = new VPRenderLogger(s_renderLogDir, VPMonotonicTime());
-
-        g_vpRenderLogger->writeText(VPRenderLogger::VP_RENDERLOG_STATUS, "Start");
+    if ( !s_renderLogDir) {
+        s_renderLogDir = new std::string("");
     }
+
+    g_vpRenderLogger = new VPRenderLogger(s_renderLogDir, VPMonotonicTime());
+
+    g_vpRenderLogger->writeText(VPRenderLogger::VP_RENDERLOG_STATUS, "Start");
 
     /*
     if (s_cmdPipeFileName) {

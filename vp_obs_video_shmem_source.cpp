@@ -117,6 +117,7 @@ static void *vp_shmem_video_consumer_thread(void *pdata)
 
         uint64_t ts = os_gettime_ns();
         double timeSinceLastFrame = (double)(ts - lastWrittenFrameT) / 1.0e9;
+        bool didUpdateFrameBuf = false;
 
         int64_t magic = SHAREDMEM_MAGIC_NUM;
         if (0 != memcmp(&magic, &(shmData->magic), 8)) {
@@ -126,7 +127,25 @@ static void *vp_shmem_video_consumer_thread(void *pdata)
             //printf(".. writing video frame: reading frame %ld, size %d*%d, audiosize %d, time since last %.3f ms (%.6f)\n",
             //       shmData->msgId, shmData->w, shmData->h, shmData->audioDataSize, timeSinceLastFrame*1000.0, (double)lastWrittenFrameT/1.0e9);
 
+            // copy into thread local framebuf
+            // 2019.01.16 -- flip because new libobs renders upside down
 
+            size_t w = std::min(sd->frameW, shmData->w);
+            size_t h = std::min(sd->frameH, shmData->h);
+            size_t rowBytes = w*4;
+            uint8_t *srcBuf = (uint8_t *)shmData->data;
+            uint8_t *dstBuf = (uint8_t *)sd->frameBuf;
+
+            for (size_t y = 0; y < h; y++) {
+                uint8_t *src = srcBuf + rowBytes*y;
+                uint8_t *dst = dstBuf + rowBytes*(h - 1 - y);  // flip
+                memcpy(dst, src, rowBytes);
+            }
+            didUpdateFrameBuf = true;
+            lastReadFrameId = shmData->msgId;
+            lastWrittenFrameT = ts;
+
+#if 0
             uint w = (uint)shmData->w;
             uint h = (uint)shmData->h;
             int rowBytes = w*4;
@@ -141,60 +160,29 @@ static void *vp_shmem_video_consumer_thread(void *pdata)
             obsFrame.timestamp = ts;
 
 
+
+#endif
+        }
+        vpconduit_shm_unlock();
+
+        if (didUpdateFrameBuf) {
+            uint32_t rowBytes = (uint32_t)sd->frameW * 4;
+            enum video_format obsFormat = VIDEO_FORMAT_BGRA;
+            struct obs_source_frame obsFrame;
+            obsFrame.data[0] = sd->frameBuf;
+            obsFrame.linesize[0] = rowBytes;
+            obsFrame.width    = (uint32_t)sd->frameW;
+            obsFrame.height   = (uint32_t)sd->frameH;
+            obsFrame.format   = obsFormat;
+            obsFrame.timestamp = ts;
+
             if (0) {
                 //writeDebugJPEG(lastReadFrameId, ts, w, h, buf, rowBytes);
-                writeDebugPNG(lastReadFrameId, w, h, buf, rowBytes);
+                writeDebugPNG(lastReadFrameId, sd->frameW, sd->frameH, sd->frameBuf, rowBytes);
             }
-
-            lastReadFrameId = shmData->msgId;
-            lastWrittenFrameT = ts;
 
             if (os_atomic_load_bool(&sd->active))
                 obs_source_output_video(sd->source, &obsFrame);
-#if 0
-            size_t audioNumSamples = shmData->audioDataSize / sizeof(int16_t);
-            if (audioNumSamples > 0) {
-                struct obs_source_audio audioData;
-                audioData.data[0] = (const uint8_t *)(shmData->data + rowBytes*h);
-                audioData.frames = (uint)audioNumSamples / 2;  // 2 channels, so each frame is 2 samples
-                audioData.speakers = SPEAKERS_STEREO;
-                audioData.samples_per_sec = 44100;
-                audioData.timestamp = ts + audio_ts_offset_ns;
-                audioData.format = AUDIO_FORMAT_16BIT;
-                obs_source_output_audio(sd->source, &audioData);
-
-                /*
-                const long samplesPerFrame = 512;
-                const long bytesPerSample = 2 * 2;  // 2 channels, 2 bytes each
-                const long bytesPerFrame = bytesPerSample * samplesPerFrame;
-                const long sampleRate = 44100;
-                const uint64_t frameIntv_ns = (uint64_t)(((double)samplesPerFrame / sampleRate) * 1.0e9);
-
-                long framesInThisBuf = audioNumSamples / samplesPerFrame;
-                printf("... audio frames: %ld (%d bytes), frameintv %lld\n", framesInThisBuf, shmData->audioDataSize, frameIntv_ns);
-
-                if (audio_ts == 0) {
-                    audio_ts = ts - framesInThisBuf*frameIntv_ns;
-                    printf(" .... resetting audio timestamp at %lld\n", audio_ts);
-                }
-
-                int16_t *audioData = (int16_t *)(shmData->data + shmData->);
-
-                for (long i = 0; i < framesInThisBuf; i++) {
-                    struct obs_source_audio audioData;
-                    audioData.data[0] = ;
-                    audioData.frames = audioNumSamples / 2;  // 2 channels, so each frame is 2 samples
-                    audioData.speakers = SPEAKERS_STEREO;
-                    audioData.samples_per_sec = 44100;
-                    audioData.timestamp = audio_ts;
-                    audioData.format = AUDIO_FORMAT_16BIT;
-                    obs_source_output_audio(sd->source, &audioData);
-
-                    audio_ts += frameIntv_ns;
-                }
-                 */
-            }
-#endif
 
             if (g_vpRenderLogger) {
                 char msg[512];
@@ -202,10 +190,7 @@ static void *vp_shmem_video_consumer_thread(void *pdata)
                          shmData->msgId, shmData->w, shmData->h, timeSinceLastFrame*1000.0);
                 g_vpRenderLogger->writeText(VPRenderLogger::VP_RENDERLOG_VIDEO, msg);
             }
-
         }
-
-        vpconduit_shm_unlock();
     }
 
     printf("%s ended\n", __func__);

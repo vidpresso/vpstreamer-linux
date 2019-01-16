@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/vp_obs_video_shmem_source.cpp" line="218" mnemonic="7" />
+    <bookmark url="file://$PROJECT_DIR$/vp_obs_video_shmem_source.cpp" line="203" mnemonic="7" />
   </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
     <generated>
@@ -15,7 +15,309 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf05c557-3370-4cf9-84d9-781fa953e6ff" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/vp_obs_audio_pipe_source.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/vp_obs_audio_pipe_source.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libobs/include/obs-config.h" beforeDir="false" afterPath="$PROJECT_DIR$/libobs/include/obs-config.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libobs/include/obs-data.h" beforeDir="false" afterPath="$PROJECT_DIR$/libobs/include/obs-data.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libobs/include/obs-encoder.h" beforeDir="false" afterPath="$PROJECT_DIR$/libobs/include/obs-encoder.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libobs/include/obs-ffmpeg-compat.h" beforeDir="false" afterPath="$PROJECT_DIR$/libobs/include/obs-ffmpeg-compat.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libobs/include/obs-module.h" beforeDir="false" afterPath="$PROJECT_DIR$/libobs/include/obs-module.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libobs/include/obs-output.h" beforeDir="false" afterPath="$PROJECT_DIR$/libobs/include/obs-output.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libobs/include/obs-properties.h" beforeDir="false" afterPath="$PROJECT_DIR$/libobs/include/obs-properties.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libobs/include/obs-scene.h" beforeDir="false" afterPath="$PROJECT_DIR$/libobs/include/obs-scene.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libobs/include/obs-service.h" beforeDir="false" afterPath="$PROJECT_DIR$/libobs/include/obs-service.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libobs/include/obs-source.h" beforeDir="false" afterPath="$PROJECT_DIR$/libobs/include/obs-source.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libobs/include/obs.h" beforeDir="false" afterPath="$PROJECT_DIR$/libobs/include/obs.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libobs/lib/libobs-frontend-api.so.0.0" beforeDir="false" afterPath="$PROJECT_DIR$/libobs/lib/libobs-frontend-api.so.0.0" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libobs/lib/libobs-opengl.so.0.0" beforeDir="false" afterPath="$PROJECT_DIR$/libobs/lib/libobs-opengl.so.0.0" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libobs/lib/libobs.so.0" beforeDir="false" afterPath="$PROJECT_DIR$/libobs/lib/libobs.so.0" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libobs/lib/libobsglad.so.0" beforeDir="false" afterPath="$PROJECT_DIR$/libobs/lib/libobsglad.so.0" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/bn-BD.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/bn-BD.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/ca-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/ca-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/cs-CZ.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/cs-CZ.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/da-DK.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/da-DK.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/de-DE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/de-DE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/en-US.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/en-US.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/es-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/es-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/et-EE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/et-EE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/eu-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/eu-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/fi-FI.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/fi-FI.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/fr-FR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/fr-FR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/he-IL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/he-IL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/hr-HR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/hr-HR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/hu-HU.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/hu-HU.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/it-IT.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/it-IT.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/ja-JP.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/ja-JP.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/ko-KR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/ko-KR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/ms-MY.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/ms-MY.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/nb-NO.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/nb-NO.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/nl-NL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/nl-NL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/pl-PL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/pl-PL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/pt-BR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/pt-BR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/pt-PT.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/pt-PT.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/ro-RO.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/ro-RO.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/ru-RU.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/ru-RU.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/sk-SK.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/sk-SK.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/sr-CS.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/sr-CS.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/sr-SP.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/sr-SP.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/sv-SE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/sv-SE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/tr-TR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/tr-TR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/uk-UA.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/uk-UA.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/vi-VN.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/vi-VN.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/zh-CN.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/zh-CN.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/zh-TW.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/frontend-tools/locale/zh-TW.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/ca-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/ca-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/cs-CZ.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/cs-CZ.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/da-DK.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/da-DK.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/de-DE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/de-DE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/el-GR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/el-GR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/en-US.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/en-US.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/es-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/es-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/et-EE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/et-EE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/eu-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/eu-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/fi-FI.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/fi-FI.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/fr-FR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/fr-FR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/hu-HU.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/hu-HU.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/it-IT.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/it-IT.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/ja-JP.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/ja-JP.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/ko-KR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/ko-KR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/nb-NO.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/nb-NO.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/nl-NL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/nl-NL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/pl-PL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/pl-PL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/pt-BR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/pt-BR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/ro-RO.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/ro-RO.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/ru-RU.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/ru-RU.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/sk-SK.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/sk-SK.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/sv-SE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/sv-SE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/tr-TR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/tr-TR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/uk-UA.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/uk-UA.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/zh-CN.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/zh-CN.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/zh-TW.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/image-source/locale/zh-TW.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-capture/locale/da-DK.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-capture/locale/da-DK.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-capture/locale/el-GR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-capture/locale/el-GR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-capture/locale/ko-KR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-capture/locale/ko-KR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-capture/locale/sk-SK.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-capture/locale/sk-SK.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/ca-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/ca-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/cs-CZ.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/cs-CZ.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/da-DK.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/da-DK.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/de-DE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/de-DE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/el-GR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/el-GR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/en-US.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/en-US.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/es-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/es-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/eu-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/eu-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/fi-FI.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/fi-FI.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/fr-FR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/fr-FR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/hu-HU.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/hu-HU.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/it-IT.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/it-IT.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/ja-JP.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/ja-JP.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/ko-KR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/ko-KR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/nb-NO.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/nb-NO.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/nl-NL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/nl-NL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/pl-PL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/pl-PL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/pt-BR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/pt-BR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/pt-PT.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/pt-PT.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/ru-RU.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/ru-RU.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/sk-SK.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/sk-SK.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/sv-SE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/sv-SE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/tr-TR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/tr-TR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/uk-UA.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/uk-UA.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/zh-CN.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/zh-CN.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/zh-TW.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-decklink/locale/zh-TW.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-jack/locale/vi-VN.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-jack/locale/vi-VN.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-pulseaudio/locale/ko-KR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-pulseaudio/locale/ko-KR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-pulseaudio/locale/pt-BR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-pulseaudio/locale/pt-BR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-v4l2/locale/ko-KR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-v4l2/locale/ko-KR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/linux-v4l2/locale/tr-TR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/linux-v4l2/locale/tr-TR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/ffmpeg-mux" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/ffmpeg-mux" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/ar-SA.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/ar-SA.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/bg-BG.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/bg-BG.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/bn-BD.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/bn-BD.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/ca-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/ca-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/cs-CZ.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/cs-CZ.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/da-DK.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/da-DK.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/de-DE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/de-DE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/el-GR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/el-GR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/en-US.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/en-US.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/es-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/es-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/et-EE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/et-EE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/eu-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/eu-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/fi-FI.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/fi-FI.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/fr-FR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/fr-FR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/gl-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/gl-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/he-IL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/he-IL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/hi-IN.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/hi-IN.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/hr-HR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/hr-HR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/hu-HU.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/hu-HU.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/it-IT.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/it-IT.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/ja-JP.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/ja-JP.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/ko-KR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/ko-KR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/nb-NO.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/nb-NO.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/nl-NL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/nl-NL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/pl-PL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/pl-PL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/pt-BR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/pt-BR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/pt-PT.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/pt-PT.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/ro-RO.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/ro-RO.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/ru-RU.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/ru-RU.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/sk-SK.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/sk-SK.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/sl-SI.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/sl-SI.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/sr-CS.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/sr-CS.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/sr-SP.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/sr-SP.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/sv-SE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/sv-SE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/th-TH.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/th-TH.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/tr-TR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/tr-TR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/uk-UA.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/uk-UA.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/vi-VN.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/vi-VN.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/zh-CN.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/zh-CN.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/zh-TW.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-ffmpeg/locale/zh-TW.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/chroma_key_filter.effect" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/chroma_key_filter.effect" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/color_grade_filter.effect" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/color_grade_filter.effect" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/ca-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/ca-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/cs-CZ.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/cs-CZ.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/da-DK.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/da-DK.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/de-DE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/de-DE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/el-GR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/el-GR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/en-US.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/en-US.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/es-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/es-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/eu-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/eu-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/fi-FI.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/fi-FI.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/fr-FR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/fr-FR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/hu-HU.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/hu-HU.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/it-IT.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/it-IT.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/ja-JP.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/ja-JP.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/ko-KR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/ko-KR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/nb-NO.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/nb-NO.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/nl-NL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/nl-NL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/pl-PL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/pl-PL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/pt-BR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/pt-BR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/ru-RU.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/ru-RU.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/sk-SK.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/sk-SK.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/sv-SE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/sv-SE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/tr-TR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/tr-TR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/uk-UA.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/uk-UA.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/zh-CN.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/zh-CN.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/zh-TW.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-filters/locale/zh-TW.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-libfdk/locale/ur-PK.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-libfdk/locale/ur-PK.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/ar-SA.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/ar-SA.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/ca-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/ca-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/cs-CZ.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/cs-CZ.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/da-DK.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/da-DK.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/de-DE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/de-DE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/el-GR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/el-GR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/en-US.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/en-US.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/es-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/es-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/eu-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/eu-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/fi-FI.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/fi-FI.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/fr-FR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/fr-FR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/hu-HU.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/hu-HU.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/it-IT.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/it-IT.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/ja-JP.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/ja-JP.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/ko-KR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/ko-KR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/nb-NO.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/nb-NO.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/nl-NL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/nl-NL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/pl-PL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/pl-PL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/pt-BR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/pt-BR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/ru-RU.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/ru-RU.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/sk-SK.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/sk-SK.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/sv-SE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/sv-SE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/tr-TR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/tr-TR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/uk-UA.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/uk-UA.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/vi-VN.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/vi-VN.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/zh-CN.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/zh-CN.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/zh-TW.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-outputs/locale/zh-TW.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/ca-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/ca-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/cs-CZ.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/cs-CZ.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/da-DK.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/da-DK.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/de-DE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/de-DE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/el-GR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/el-GR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/en-US.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/en-US.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/es-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/es-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/eu-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/eu-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/fi-FI.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/fi-FI.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/fr-FR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/fr-FR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/hu-HU.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/hu-HU.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/it-IT.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/it-IT.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/ja-JP.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/ja-JP.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/ko-KR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/ko-KR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/nb-NO.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/nb-NO.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/nl-NL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/nl-NL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/pl-PL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/pl-PL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/pt-BR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/pt-BR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/ru-RU.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/ru-RU.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/sv-SE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/sv-SE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/tr-TR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/tr-TR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/uk-UA.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/uk-UA.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/zh-CN.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/zh-CN.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/zh-TW.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-transitions/locale/zh-TW.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-x264/locale/el-GR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-x264/locale/el-GR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-x264/locale/ko-KR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-x264/locale/ko-KR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-x264/locale/nb-NO.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-x264/locale/nb-NO.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-x264/locale/ru-RU.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-x264/locale/ru-RU.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/obs-x264/locale/zh-CN.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/obs-x264/locale/zh-CN.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/ca-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/ca-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/cs-CZ.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/cs-CZ.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/da-DK.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/da-DK.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/de-DE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/de-DE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/el-GR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/el-GR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/en-US.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/en-US.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/es-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/es-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/eu-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/eu-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/fi-FI.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/fi-FI.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/fr-FR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/fr-FR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/hu-HU.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/hu-HU.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/it-IT.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/it-IT.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/ja-JP.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/ja-JP.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/ko-KR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/ko-KR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/nb-NO.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/nb-NO.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/nl-NL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/nl-NL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/pl-PL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/pl-PL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/pt-BR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/pt-BR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/ru-RU.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/ru-RU.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/sk-SK.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/sk-SK.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/sv-SE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/sv-SE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/tr-TR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/tr-TR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/uk-UA.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/uk-UA.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/zh-CN.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/zh-CN.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/zh-TW.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/locale/zh-TW.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/services.json" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/rtmp-services/services.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/ar-SA.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/ar-SA.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/bn-BD.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/bn-BD.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/ca-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/ca-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/cs-CZ.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/cs-CZ.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/da-DK.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/da-DK.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/de-DE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/de-DE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/el-GR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/el-GR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/en-US.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/en-US.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/es-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/es-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/et-EE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/et-EE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/eu-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/eu-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/fi-FI.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/fi-FI.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/fr-FR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/fr-FR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/gl-ES.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/gl-ES.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/he-IL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/he-IL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/hr-HR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/hr-HR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/hu-HU.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/hu-HU.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/it-IT.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/it-IT.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/ja-JP.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/ja-JP.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/ko-KR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/ko-KR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/ms-MY.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/ms-MY.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/nb-NO.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/nb-NO.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/nl-NL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/nl-NL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/pl-PL.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/pl-PL.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/pt-BR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/pt-BR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/pt-PT.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/pt-PT.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/ro-RO.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/ro-RO.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/ru-RU.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/ru-RU.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/sk-SK.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/sk-SK.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/sl-SI.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/sl-SI.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/sr-CS.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/sr-CS.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/sr-SP.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/sr-SP.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/sv-SE.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/sv-SE.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/tr-TR.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/tr-TR.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/uk-UA.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/uk-UA.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/zh-CN.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/zh-CN.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/zh-TW.ini" beforeDir="false" afterPath="$PROJECT_DIR$/obs-plugins/data/text-freetype2/locale/zh-TW.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vp_obs_video_shmem_source.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/vp_obs_video_shmem_source.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,41 +332,45 @@
       <usages-collector id="statistics.lifecycle.project">
         <counts>
           <entry key="project.open.time.1" value="1" />
-          <entry key="project.open.time.3" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.open.time.3" value="2" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cpp" value="1657" />
+          <entry key="cpp" value="3051" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="ObjectiveC" value="1657" />
+          <entry key="ObjectiveC" value="3051" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="h" value="2" />
+          <entry key="VPStreamer (disassembly)" value="1" />
+          <entry key="c" value="3" />
+          <entry key="cpp" value="2" />
+          <entry key="h" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="ObjectiveC" value="2" />
+          <entry key="Disassembly" value="1" />
+          <entry key="ObjectiveC" value="12" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/vp_obs_video_shmem_source.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1410">
-              <caret line="94" column="32" selection-start-line="94" selection-start-column="32" selection-end-line="94" selection-end-column="32" />
+            <state relative-caret-position="462">
+              <caret line="174" column="53" lean-forward="true" selection-start-line="174" selection-start-column="53" selection-end-line="174" selection-end-column="53" />
               <folding>
-                <element signature="e#39#77#0" expanded="true" />
+                <element signature="e#5043#5541#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -79,13 +385,12 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vp_obs_audio_pipe_source.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="121">
-              <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+            <state relative-caret-position="159">
+              <caret line="79" column="1" selection-start-line="79" selection-start-column="1" selection-end-line="79" selection-end-column="1" />
               <folding>
-                <element signature="e#2255#2301#0" expanded="true" />
                 <element signature="e#4047#4106#0" expanded="true" />
               </folding>
             </state>
@@ -95,7 +400,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vp_audio_pipe_consumer.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
+            <state relative-caret-position="2355">
               <caret line="157" column="1" selection-start-line="157" selection-start-column="1" selection-end-line="157" selection-end-column="1" />
             </state>
           </provider>
@@ -104,8 +409,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="353" column="66" selection-start-line="353" selection-start-column="66" selection-end-line="353" selection-end-column="66" />
+            <state relative-caret-position="-317">
+              <caret line="454" column="100" selection-start-line="454" selection-start-column="95" selection-end-line="454" selection-end-column="100" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../obs-studio/libobs/obs.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="759">
+              <caret line="177" column="15" lean-forward="true" selection-start-line="177" selection-start-column="15" selection-end-line="177" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -113,11 +427,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vp_render_logger.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="41" column="1" selection-start-line="41" selection-start-column="1" selection-end-line="41" selection-end-column="1" />
-              <folding>
-                <element signature="e#39#68#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="952">
+              <caret line="69" selection-start-line="69" selection-end-line="69" />
             </state>
           </provider>
         </entry>
@@ -147,13 +458,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>std::cout</find>
-      <find>error r</find>
-      <find>s_videow</find>
-      <find>1280</find>
-      <find>vpsource</find>
-      <find>source_reg</find>
-      <find>g_vp</find>
       <find>vp_source_</find>
       <find>vp_video</find>
       <find>obs_set_output_s</find>
@@ -177,6 +481,13 @@
       <find>s_aac</find>
       <find>driver_c</find>
       <find>write_</find>
+      <find>obs_reset</find>
+      <find>video_fail</find>
+      <find>stringstream</find>
+      <find>reset_vid</find>
+      <find>debug</find>
+      <find>scene</find>
+      <find>framebuf</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -198,10 +509,10 @@
         <option value="$PROJECT_DIR$/vp_render_logger.h" />
         <option value="$PROJECT_DIR$/vp_render_logger.cpp" />
         <option value="$PROJECT_DIR$/vp_audio_pipe_consumer.h" />
-        <option value="$PROJECT_DIR$/vp_obs_video_shmem_source.cpp" />
-        <option value="$PROJECT_DIR$/main.cpp" />
         <option value="$PROJECT_DIR$/vp_audio_pipe_consumer.cpp" />
         <option value="$PROJECT_DIR$/vp_obs_audio_pipe_source.cpp" />
+        <option value="$PROJECT_DIR$/main.cpp" />
+        <option value="$PROJECT_DIR$/vp_obs_video_shmem_source.cpp" />
       </list>
     </option>
   </component>
@@ -214,6 +525,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths>
       <path value="$PROJECT_DIR$/obs-plugins/data/rtmp-services/package.json" />
+      <path value="$PROJECT_DIR$/obs-plugins__20180928/data/rtmp-services/package.json" />
     </packageJsonPaths>
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
@@ -266,7 +578,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -274,10 +585,21 @@
               <item name="VPStreamer" type="b2602c69:ProjectViewProjectNode" />
               <item name="vpstreamer-linux" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="VPStreamer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vpstreamer-linux" type="462c0819:PsiDirectoryNode" />
+              <item name="libobs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="VPStreamer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vpstreamer-linux" type="462c0819:PsiDirectoryNode" />
+              <item name="obs-plugins" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -399,23 +721,24 @@
       <workItem from="1512260956467" duration="1929000" />
       <workItem from="1538138479372" duration="605000" />
       <workItem from="1538412114178" duration="19960000" />
+      <workItem from="1547559157401" duration="6583000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="168551000" />
+    <option name="totallyTimeSpent" value="175134000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="-4" width="1615" height="993" extended-state="6" />
+    <frame x="64" y="-11" width="1562" height="938" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24601658" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2582563" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32947975" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32948583" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32917705" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3990025" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -423,7 +746,7 @@
       <window_info anchor="bottom" id="CMake" order="8" weight="0.32934782" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Messages" order="11" visible="true" weight="0.31098264" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.33541146" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -495,13 +818,6 @@
     <entry file="file://$PROJECT_DIR$/time_utils.h">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../obs-studio/libobs/obs-source.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="219" column="17" selection-start-line="219" selection-start-column="10" selection-end-line="219" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vp_obs_audio_pipe_source.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -523,13 +839,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vp_obs_video_shmem_source.cpp">
+    <entry file="file://$PROJECT_DIR$/vp_audio_pipe_consumer.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1410">
-          <caret line="94" column="32" selection-start-line="94" selection-start-column="32" selection-end-line="94" selection-end-column="32" />
-          <folding>
-            <element signature="e#39#77#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="180">
+          <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/stdint.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="160" column="9" selection-start-line="160" selection-start-column="9" selection-end-line="160" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -540,13 +860,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vp_render_logger.cpp">
+    <entry file="file://$PROJECT_DIR$/vp_audio_pipe_consumer.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="41" column="1" selection-start-line="41" selection-start-column="1" selection-end-line="41" selection-end-column="1" />
-          <folding>
-            <element signature="e#39#68#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="2355">
+          <caret line="157" column="1" selection-start-line="157" selection-start-column="1" selection-end-line="157" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -567,48 +884,71 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vp_audio_pipe_consumer.h">
+    <entry file="file://$PROJECT_DIR$/vp_obs_audio_pipe_source.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+        <state relative-caret-position="159">
+          <caret line="79" column="1" selection-start-line="79" selection-start-column="1" selection-end-line="79" selection-end-column="1" />
+          <folding>
+            <element signature="e#4047#4106#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../obs-studio/libobs/obs-defs.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="44" column="8" selection-start-line="44" selection-start-column="8" selection-end-line="44" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/x86_64-linux-gnu/c++/5/bits/gthr-default.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="747" selection-start-line="747" selection-end-line="747" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vp_render_logger.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="952">
+          <caret line="69" selection-start-line="69" selection-end-line="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../obs-studio/libobs/obs.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-794">
+          <caret line="1011" column="4" selection-start-line="1011" selection-start-column="4" selection-end-line="1011" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../obs-studio/libobs/obs-source.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2056">
+          <caret line="154" column="7" selection-start-line="154" selection-start-column="7" selection-end-line="154" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../obs-studio/libobs/obs.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="183" column="7" selection-start-line="183" selection-start-column="7" selection-end-line="183" selection-end-column="7" />
+        <state relative-caret-position="759">
+          <caret line="177" column="15" lean-forward="true" selection-start-line="177" selection-start-column="15" selection-end-line="177" selection-end-column="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="353" column="66" selection-start-line="353" selection-start-column="66" selection-end-line="353" selection-end-column="66" />
+        <state relative-caret-position="-317">
+          <caret line="454" column="100" selection-start-line="454" selection-start-column="95" selection-end-line="454" selection-end-column="100" />
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/include/stdint.h">
+    <entry file="file://$PROJECT_DIR$/vp_obs_video_shmem_source.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="160" column="9" selection-start-line="160" selection-start-column="9" selection-end-line="160" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vp_audio_pipe_consumer.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="157" column="1" selection-start-line="157" selection-start-column="1" selection-end-line="157" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vp_obs_audio_pipe_source.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+        <state relative-caret-position="462">
+          <caret line="174" column="53" lean-forward="true" selection-start-line="174" selection-start-column="53" selection-end-line="174" selection-end-column="53" />
           <folding>
-            <element signature="e#2255#2301#0" expanded="true" />
-            <element signature="e#4047#4106#0" expanded="true" />
+            <element signature="e#5043#5541#0" expanded="true" />
           </folding>
         </state>
       </provider>
