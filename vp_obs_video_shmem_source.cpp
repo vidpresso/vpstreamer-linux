@@ -128,17 +128,14 @@ static void *vp_shmem_video_consumer_thread(void *pdata)
             //       shmData->msgId, shmData->w, shmData->h, shmData->audioDataSize, timeSinceLastFrame*1000.0, (double)lastWrittenFrameT/1.0e9);
 
             // copy into thread local framebuf
-            // 2019.01.16 -- flip because new libobs renders upside down
-
-            size_t w = std::min(sd->frameW, shmData->w);
-            size_t h = std::min(sd->frameH, shmData->h);
+            size_t w = (size_t) std::min(sd->frameW, shmData->w);
+            size_t h = (size_t) std::min(sd->frameH, shmData->h);
             size_t rowBytes = w*4;
             uint8_t *srcBuf = (uint8_t *)shmData->data;
             uint8_t *dstBuf = (uint8_t *)sd->frameBuf;
-
             for (size_t y = 0; y < h; y++) {
                 uint8_t *src = srcBuf + rowBytes*y;
-                uint8_t *dst = dstBuf + rowBytes*(h - 1 - y);  // flip
+                uint8_t *dst = dstBuf + rowBytes*y;
                 memcpy(dst, src, rowBytes);
             }
             didUpdateFrameBuf = true;

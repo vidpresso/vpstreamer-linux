@@ -313,37 +313,6 @@ static void initObsStreaming()
     }
     ///exit(1);  // DEBUG
 
-    //std::cout << "stream dest url: " << (s_streamUrl ? *s_streamUrl : "(null)") << std::endl;
-/*
-    if (s_streamUrl && s_streamKey) {
-        const char *serverUrl = s_streamUrl->c_str();  //"rtmp://a.rtmp.youtube.com/live2";
-        const char *serverKey = s_streamKey->c_str(); //"dh5q-g412-mbpz-2t0u";
-        s_numStreams = 1;
-
-        s_streamOutputs[0] = obs_output_create("rtmp_output",
-                                               "vp stream output", NULL, NULL);
-
-
-        VPObsCallbackData *cbData = (VPObsCallbackData *)calloc(1, sizeof(VPObsCallbackData));
-        cbData->serviceIndex = 0;
-        signal_handler_t *sh;
-        sh = obs_output_get_signal_handler(s_streamOutputs[0]);
-        signal_handler_connect(sh, "start", obsOutputStartCb, cbData);
-        signal_handler_connect(sh, "stop", obsOutputStopCb, cbData);
-        signal_handler_connect(sh, "reconnect", obsOutputReconnectCb, cbData);
-        signal_handler_connect(sh, "reconnect_success", obsOutputReconnectSuccessCb, cbData);
-
-
-        s_services[0] = obs_service_create("rtmp_custom",
-                                           "vp stream service", NULL, NULL);
-
-        obs_data_t *serviceSettings = obs_data_create();
-        obs_data_set_string(serviceSettings, "server", serverUrl);
-        obs_data_set_string(serviceSettings, "key", serverKey);
-        obs_service_update(s_services[0], serviceSettings);
-        obs_data_release(serviceSettings);
-    }
-*/
     s_h264Streaming = obs_video_encoder_create("obs_x264",
                                                "simple h264 stream", NULL, NULL);
 
@@ -360,9 +329,34 @@ static void initObsStreaming()
 
     }
 
+    const bool useScene = true;
+    if (useScene) {
+        obs_scene_t *scene = obs_scene_create("vidpresso basic scene");
+        obs_source_t *sceneSource = obs_scene_get_source(scene);
+        obs_sceneitem_t *sceneItem_video = obs_scene_add(scene, s_vpVideoSource);
 
+        struct vec2 scale;
+        vec2_set(&scale, 1, 1);
+        obs_sceneitem_set_scale(sceneItem_video, &scale);
+        obs_sceneitem_set_bounds_alignment(sceneItem_video, OBS_BOUNDS_STRETCH);
 
-    obs_set_output_source(0, s_vpVideoSource);
+        struct obs_transform_info trsInfo;
+        obs_sceneitem_get_info(sceneItem_video, &trsInfo);
+        printf("sceneitem: pos %.1f / %.1f, scale %f / %f, alignment %d, boundsalign %d, bounds %.1f / %.1f, boundstype %d\n",
+               trsInfo.pos.x, trsInfo.pos.y,
+               trsInfo.scale.x, trsInfo.scale.y,
+               trsInfo.alignment,
+               trsInfo.bounds_alignment,
+               trsInfo.bounds.x, trsInfo.bounds.y,
+               trsInfo.bounds_type
+        );
+
+        obs_set_output_source(0, sceneSource);
+    }
+    else {
+        obs_set_output_source(0, s_vpVideoSource);
+    }
+
     obs_set_output_source(1, s_vpAudioSource);
 
     // configure audio source
@@ -678,15 +672,21 @@ int main(int argc, char* argv[])
         t.detach();
     }*/
 
-    initObsStreaming();
-
+    std::cout << "--reset obs--" << std::endl;
     resetObsVideoAndAudio();
 
+    std::cout << "--init obs streaming--" << std::endl;
+    initObsStreaming();
+
+    std::cout << "--update obs settings-" << std::endl;
     updateObsSettings(videoBitrate, audioBitrate, keyint_secs, vbr);
 
     writeStatusToFile("starting");
 
+    std::cout << "--start obs streaming--" << std::endl;
     startObsStreaming();
+
+    std::cout << "--obs streaming started--" << std::endl;
 
     s_streaming = true;
     s_interrupted = false;
