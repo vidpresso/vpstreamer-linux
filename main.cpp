@@ -484,8 +484,10 @@ static void startObsStreaming()
 {
     // connect encoders to obs video and audio
     obs_encoder_set_video(s_h264Streaming, obs_get_video());
-    obs_encoder_set_audio(s_aacStreaming, obs_get_audio());
+    std::cout << "video encoder set" << std::endl << std::flush;
 
+    obs_encoder_set_audio(s_aacStreaming, obs_get_audio());
+    std::cout << "audio encoder set" << std::endl << std::flush;
 
     // set up file output
     time_t now = time(0);
@@ -508,6 +510,8 @@ static void startObsStreaming()
         printf("%s: file output path set to %s\n", __func__, s_recordingFileName->c_str());
 
         obs_output_start(s_fileOutput);
+
+        std::cout << "file output started" << std::endl << std::flush;
     }
 
     // set up stream output
@@ -520,6 +524,8 @@ static void startObsStreaming()
             obs_output_set_service(s_streamOutputs[i], s_services[i]);
 
             obs_output_start(s_streamOutputs[i]);
+
+            std::cout << "stream output started" << std::endl << std::flush;
         }
     }
 }
@@ -683,11 +689,6 @@ int main(int argc, char* argv[])
 
     writeStatusToFile("starting");
 
-    std::cout << "--start obs streaming--" << std::endl;
-    startObsStreaming();
-
-    std::cout << "--obs streaming started--" << std::endl;
-
     s_streaming = true;
     s_interrupted = false;
 
@@ -701,9 +702,23 @@ int main(int argc, char* argv[])
     signal(SIGINT, terminationSignalHandlerCb);
     signal(SIGTERM, terminationSignalHandlerCb);
 
+    // wait a bit to actually start obs streaming so threads are ready
+    bool didStart = false;
+    uint64_t ni = 0;
+
     while (1) {
         std::cout << std::flush;
         usleep(10*1000);
+        ni++;
+
+        if ( !didStart && ni >= 10) {
+            std::cout << "--start obs streaming--" << std::endl;
+
+            startObsStreaming();
+            didStart = true;
+
+            std::cout << "--obs streaming started--" << std::endl;
+        }
 
         /*sleep(1);
         s_interrupted = true;*/
