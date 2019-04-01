@@ -71,7 +71,6 @@ void VPRenderLogger::writeText(VPRenderLogType logType, const char *text)
 
     double t = VPMonotonicTime() - m_startT;
 
-
     this->openSegmentIfNeeded(t);
 
     if ( !m_filePtr)
