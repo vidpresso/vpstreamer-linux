@@ -36,6 +36,13 @@
 #endif
 
 
+#if USE_LOBSTER
+extern "C" {
+EXPORT bool lobster_init_standard_modules(void); 
+};
+#endif
+
+
 // We don't want streaming to run indefinitely because disk space for recordings is limited.
 // The process will self-terminate when this limit is exceeded.
 #define MAX_PROCESS_RUNTIME_HOURS 8
@@ -253,12 +260,17 @@ static void initObsLibraries()
     */
     //obs_load_all_modules();
 
+#if USE_LOBSTER
+    lobster_init_standard_modules();
+    printf("%s loading standard modules done (using lobster)\n", __func__);
+#else
     loadObsPlugin("obs-ffmpeg");
     loadObsPlugin("obs-outputs");
     loadObsPlugin("obs-x264");
     loadObsPlugin("rtmp-services");
+    printf("%s loading standard modules done (using standard libobs)\n", __func__);
+#endif
 
-    printf("%s loading standard modules done\n", __func__);
 
     vp_obs_video_source_register(NULL, NULL);
     vp_audio_source_register();
@@ -329,6 +341,7 @@ static void initObsStreaming()
 
     }
 
+#if 0
     const bool useScene = true;
     if (useScene) {
         obs_scene_t *scene = obs_scene_create("vidpresso basic scene");
@@ -354,8 +367,9 @@ static void initObsStreaming()
         obs_set_output_source(0, sceneSource);
     }
     else {
+#endif
         obs_set_output_source(0, s_vpVideoSource);
-    }
+    //}
 
     obs_set_output_source(1, s_vpAudioSource);
 
