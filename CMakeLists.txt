@@ -19,11 +19,25 @@ message(STATUS "OBS_INCLUDE_DIR = ${OBS_INCLUDE_DIR}")
 #        )
 #set(OBS_BASE_LIBRARIES obs X11 ${PNG_LIBRARIES} turbojpeg)
 
+ADD_LIBRARY(mbedcrypto_static STATIC IMPORTED)
+SET_TARGET_PROPERTIES(mbedcrypto_static PROPERTIES
+        IMPORTED_LOCATION "/usr/local/lib/libmbedcrypto.a"
+        )
+ADD_LIBRARY(mbedtls_static STATIC IMPORTED)
+SET_TARGET_PROPERTIES(mbedtls_static PROPERTIES
+        IMPORTED_LOCATION "/usr/local/lib/libmbedtls.a"
+        INTERFACE_LINK_LIBRARIES "mbedcrypto_static"
+        )
+ADD_LIBRARY(mbedx509_static STATIC IMPORTED)
+SET_TARGET_PROPERTIES(mbedx509_static PROPERTIES
+        IMPORTED_LOCATION "/usr/local/lib/libmbedx509.a"
+        )
+
 set(LOBSTER_LIBS
         rt m z dl
         avcodec avutil avformat swresample swscale
         x264
-        mbedtls mbedcrypto mbedx509
+        mbedtls_static mbedcrypto_static mbedx509_static
         )
 
 ADD_LIBRARY(lobster STATIC IMPORTED)
@@ -48,6 +62,9 @@ target_link_libraries(VPStreamer
         #${OBS_BASE_LIBRARIES}
         #obs-opengl
         lobster
+        mbedcrypto_static
+        mbedtls_static
+        mbedx509_static
         )
 
 

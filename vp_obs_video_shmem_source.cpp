@@ -136,7 +136,26 @@ static void *vp_shmem_video_consumer_thread(void *pdata)
             for (size_t y = 0; y < h; y++) {
                 uint8_t *src = srcBuf + rowBytes*y;
                 uint8_t *dst = dstBuf + rowBytes*y;
-                memcpy(dst, src, rowBytes);
+
+                //memcpy(dst, src, rowBytes);
+
+                // swap RGBA->BGRA byte order.
+                // lobster needs this for whatever reason
+                const uint32_t *src32 = (uint32_t *)src;
+                uint32_t *dst32 = (uint32_t *)dst;
+                const size_t rowInts = w;
+                for (size_t x = 0; x < rowInts; x++) {
+                    uint32_t v = *src32++;
+
+                    uint32_t r = v & 0xff;
+                    uint32_t g = (v >> 8) & 0xff;
+                    uint32_t b = (v >> 16) & 0xff;
+                    uint32_t a = 255;  // always set alpha to full since we're encoding to video
+
+                    v = (a << 24) | (r << 16) | (g << 8) | (b);
+
+                    *dst32++ = v;
+                }
             }
             didUpdateFrameBuf = true;
             lastReadFrameId = shmData->msgId;

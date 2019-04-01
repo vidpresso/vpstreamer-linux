@@ -38,7 +38,7 @@
 
 #if USE_LOBSTER
 extern "C" {
-EXPORT bool lobster_init_standard_modules(void); 
+EXPORT bool lobster_init_standard_modules(void);
 };
 #endif
 
@@ -331,8 +331,16 @@ static void initObsStreaming()
     s_vpVideoSource = obs_source_create(VP_VIDEO_SOURCE_OBS_ID,
                                         "vidpresso live stream", NULL, NULL);
 
+    obs_set_output_source(0, s_vpVideoSource);
+
+    printf("video source created and set as output 0\n");
+
     s_vpAudioSource = obs_source_create(VP_AUDIO_SOURCE_OBS_ID,
                                         "vidpresso audio stream", NULL, NULL);
+
+    obs_set_output_source(1, s_vpAudioSource);
+
+    printf("audio source created and set as output 1\n");
 
     if (1) {
         s_aacStreaming = obs_audio_encoder_create("ffmpeg_aac",
@@ -367,11 +375,11 @@ static void initObsStreaming()
         obs_set_output_source(0, sceneSource);
     }
     else {
-#endif
         obs_set_output_source(0, s_vpVideoSource);
-    //}
+    }
 
     obs_set_output_source(1, s_vpAudioSource);
+#endif
 
     // configure audio source
     obs_source_set_sync_offset(s_vpAudioSource, (int64_t)(s_audioSyncOffsetInSecs*NSEC_PER_SEC));
