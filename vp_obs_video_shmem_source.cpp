@@ -110,10 +110,14 @@ static void *vp_shmem_video_consumer_thread(void *pdata)
         if ( !os_atomic_load_bool(&sd->active))
             continue;
 
+        pthread_mutex_lock(&sd->frameBufLock);
+
         VPConduitSharedMemData *shmData = vpconduit_shm_lock();
         //printf("... %s locked shm data %p\n", __func__, shmData);
-        if ( !shmData)
+        if ( !shmData) {
+            pthread_mutex_unlock(&sd->frameBufLock);
             continue;
+        }
 
         uint64_t ts = os_gettime_ns();
         double timeSinceLastFrame = (double)(ts - lastWrittenFrameT) / 1.0e9;
@@ -207,6 +211,8 @@ static void *vp_shmem_video_consumer_thread(void *pdata)
                 g_vpRenderLogger->writeText(VPRenderLogger::VP_RENDERLOG_VIDEO, msg);
             }
         }
+
+        pthread_mutex_unlock(&sd->frameBufLock);
     }
 
     printf("%s ended\n", __func__);
