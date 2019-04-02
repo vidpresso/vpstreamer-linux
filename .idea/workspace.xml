@@ -15,8 +15,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf05c557-3370-4cf9-84d9-781fa953e6ff" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lobster/liblobster.a" beforeDir="false" afterPath="$PROJECT_DIR$/lobster/liblobster.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vp_obs_video_shmem_source.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/vp_obs_video_shmem_source.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -82,11 +82,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vp_obs_video_shmem_source.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="317">
-              <caret line="131" column="14" selection-start-line="131" selection-start-column="14" selection-end-line="131" selection-end-column="14" />
+            <state relative-caret-position="107">
+              <caret line="117" column="52" selection-start-line="117" selection-start-column="52" selection-end-line="117" selection-end-column="52" />
               <folding>
                 <element signature="e#5682#6180#0" expanded="true" />
               </folding>
@@ -124,11 +124,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-480">
-              <caret line="332" selection-start-line="332" selection-end-line="332" />
+            <state relative-caret-position="150">
+              <caret line="674" lean-forward="true" selection-start-line="674" selection-end-line="674" />
               <folding>
                 <element signature="e#7908#8097#0" expanded="true" />
                 <element signature="e#11020#12151#0" expanded="true" />
@@ -444,12 +444,12 @@
       <workItem from="1538138479372" duration="605000" />
       <workItem from="1538412114178" duration="19960000" />
       <workItem from="1547559157401" duration="16128000" />
-      <workItem from="1554114416243" duration="8784000" />
+      <workItem from="1554114416243" duration="9978000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="193463000" />
+    <option name="totallyTimeSpent" value="194657000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1617" height="1001" extended-state="6" />
@@ -676,23 +676,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
+    <entry file="file://$PROJECT_DIR$/vp_obs_video_shmem_source.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-480">
-          <caret line="332" selection-start-line="332" selection-end-line="332" />
+        <state relative-caret-position="107">
+          <caret line="117" column="52" selection-start-line="117" selection-start-column="52" selection-end-line="117" selection-end-column="52" />
           <folding>
-            <element signature="e#7908#8097#0" expanded="true" />
-            <element signature="e#11020#12151#0" expanded="true" />
+            <element signature="e#5682#6180#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vp_obs_video_shmem_source.cpp">
+    <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="131" column="14" selection-start-line="131" selection-start-column="14" selection-end-line="131" selection-end-column="14" />
+        <state relative-caret-position="150">
+          <caret line="674" lean-forward="true" selection-start-line="674" selection-end-line="674" />
           <folding>
-            <element signature="e#5682#6180#0" expanded="true" />
+            <element signature="e#7908#8097#0" expanded="true" />
+            <element signature="e#11020#12151#0" expanded="true" />
           </folding>
         </state>
       </provider>
