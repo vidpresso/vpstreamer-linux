@@ -759,6 +759,10 @@ int main(int argc, char* argv[])
 
     g_vpRenderLogger->writeText(VPRenderLogger::VP_RENDERLOG_STATUS, "Stop.");
 
+    // give background threads some time to write output
+    std::cout << "Waiting to exit...\n";
+    usleep(1000*1000);
+
     std::cout << "Main thread exiting.\n";
 
     return 0;
