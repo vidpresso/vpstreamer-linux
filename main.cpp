@@ -724,6 +724,9 @@ int main(int argc, char* argv[])
     signal(SIGINT, terminationSignalHandlerCb);
     signal(SIGTERM, terminationSignalHandlerCb);
 
+    // ignore any sigpipe from lobster's RTMPS disconnection
+    signal(SIGPIPE, SIG_IGN);
+
     // wait a bit to actually start obs streaming so threads are ready
     bool didStart = false;
     uint64_t ni = 0;
