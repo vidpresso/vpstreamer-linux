@@ -15,8 +15,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf05c557-3370-4cf9-84d9-781fa953e6ff" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lobster/liblobster.a" beforeDir="false" afterPath="$PROJECT_DIR$/lobster/liblobster.a" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -127,8 +126,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="727" column="29" lean-forward="true" selection-start-line="727" selection-start-column="29" selection-end-line="727" selection-end-column="29" />
+            <state relative-caret-position="497">
+              <caret line="745" column="9" selection-start-line="745" selection-start-column="9" selection-end-line="745" selection-end-column="9" />
               <folding>
                 <element signature="e#7908#8097#0" expanded="true" />
                 <element signature="e#11020#12151#0" expanded="true" />
@@ -444,12 +443,12 @@
       <workItem from="1538138479372" duration="605000" />
       <workItem from="1538412114178" duration="19960000" />
       <workItem from="1547559157401" duration="16128000" />
-      <workItem from="1554114416243" duration="12971000" />
+      <workItem from="1554114416243" duration="14283000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="197650000" />
+    <option name="totallyTimeSpent" value="198962000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1617" height="1001" extended-state="6" />
@@ -688,8 +687,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="727" column="29" lean-forward="true" selection-start-line="727" selection-start-column="29" selection-end-line="727" selection-end-column="29" />
+        <state relative-caret-position="497">
+          <caret line="745" column="9" selection-start-line="745" selection-start-column="9" selection-end-line="745" selection-end-column="9" />
           <folding>
             <element signature="e#7908#8097#0" expanded="true" />
             <element signature="e#11020#12151#0" expanded="true" />
